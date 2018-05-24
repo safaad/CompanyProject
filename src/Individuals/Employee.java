@@ -1,16 +1,51 @@
 package Individuals;
 
+import java.util.Scanner;
+import java.util.ArrayList;
+
 public class Employee extends Person {
-		protected double salary=1000;
+	Scanner in;
+		protected double salary=1000;//basic
 		protected String username;
-		protected boolean admin;
+		protected boolean admin=false;
 		protected String password=null;
+		protected ArrayList<Boolean> attend;
+		protected ArrayList<Boolean> attendExtra;
+		
 		Employee(String first,String last,int a){
-			fn=first;
-			ln=last;
-			age=a;
-			username="" + fn.charAt(0) + fn.charAt(1) +"." + ln.charAt(0).
+			super(first,last,a);
+			username="" + fn.charAt(0) + fn.charAt(1) +fn.charAt(2) +"." + ln.charAt(0)+ln.charAt(1)+ln.charAt(2);
+			attend=new ArrayList<Boolean>();
+			attendExtra=new ArrayList<Boolean>();
 		}
 		
+		public void setAdminstartor(){
+			admin=true;
+			setPassword();
+		}
+		public boolean confirmPassword() {
+			String pass;
+			System.out.println("please confirm your password first:");
+			pass=in.nextLine();
+			return pass.equals(password);
+		}
+		public void setPassword() {//it needs so many updates 
+			String pass;
+			if(password !=null) {
+					while(!confirmPassword());
+				}
+			do {
+				System.out.println("please enter the new password:");
+				pass=in.nextLine();
+				System.out.println("please reenter the password");
+				password=in.nextLine();
+			}while(!pass.equals(password));
+			System.out.println("loged in\n-------------------------");	
+		}
+		protected void resetSalary(double s) {
+			salary+=s;
+		}
 		
+
+
 }
