@@ -14,7 +14,8 @@ public class Employee extends Person {
 		
 		Employee(String first,String last,int a){
 			super(first,last,a);
-			username="" + fn.charAt(0) + fn.charAt(1) +fn.charAt(2) +"." + ln.charAt(0)+ln.charAt(1)+ln.charAt(2);
+			username="" + fn.charAt(0) + fn.charAt(1) +fn.charAt(2)
+					+ "_" + ln.charAt(0)+ln.charAt(1)+ln.charAt(2);
 			attend=new ArrayList<Boolean>();
 			attendExtra=new ArrayList<Boolean>();
 		}
@@ -22,8 +23,9 @@ public class Employee extends Person {
 		public void setAdminstartor(){
 			admin=true;
 			setPassword();
+			setSalary();
 		}
-		public boolean confirmPassword() {
+		public boolean confirmPassword() {//this may be removed to driver
 			String pass;
 			System.out.println("please confirm your password first:");
 			pass=in.nextLine();
@@ -42,10 +44,9 @@ public class Employee extends Person {
 			}while(!pass.equals(password));
 			System.out.println("loged in\n-------------------------");	
 		}
-		protected void resetSalary(double s) {
-			salary+=s;
+		protected void setSalary() {//100$ for admin
+			if(admin)
+				salary+=100;
 		}
-		
-
 
 }
