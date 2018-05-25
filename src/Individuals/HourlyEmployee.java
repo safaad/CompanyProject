@@ -3,8 +3,8 @@ import java.util.Date;
 import java.util.ArrayList;
 public class HourlyEmployee extends Employee {
 	protected int reqNbOfHours;
-	protected int nbOfHours=0;
-	protected int nbOfExtraHours=0;
+	protected int nbOfHours=0;//to be removed
+	protected int nbOfExtraHours=0;// to be removed
 	protected int  tin;
 	protected int tout;
 
