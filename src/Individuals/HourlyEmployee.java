@@ -5,9 +5,15 @@ import java.util.ArrayList;
 
 public class HourlyEmployee extends Employee {
 	protected int reqNbOfHours;
+<<<<<<< HEAD
 	protected int nbOfHours = 0;
 	protected int nbOfExtraHours = 0;
 	protected int tin;
+=======
+	protected int nbOfHours=0;//to be removed
+	protected int nbOfExtraHours=0;// to be removed
+	protected int  tin;
+>>>>>>> b45484dad4516e2896987c2a1cc2b6ccfae350ed
 	protected int tout;
 
 	ArrayList<Integer> nbOfHrs;
