@@ -1,41 +1,43 @@
 package Individuals;
 
 import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class HourlyEmployee extends Employee {
 	protected int reqNbOfHours;
-<<<<<<< HEAD
 	protected int nbOfHours = 0;
 	protected int nbOfExtraHours = 0;
 	protected int tin;
-=======
-	protected int nbOfHours=0;//to be removed
-	protected int nbOfExtraHours=0;// to be removed
-	protected int  tin;
->>>>>>> b45484dad4516e2896987c2a1cc2b6ccfae350ed
 	protected int tout;
-
 	ArrayList<Integer> nbOfHrs;
+	boolean flagin = false;
 
 	// load
-	public HourlyEmployee(String first, String last, int a, int nbOfh) {
-		super(first, last, a);
-		this.setUsername("2"+username);
+	public HourlyEmployee(String first, String last, int[] birthday, int nbOfh) {
+		super(first, last, birthday);
 		reqNbOfHours = nbOfh;
 		nbOfHrs = new ArrayList<Integer>();
 	}
 
-	@SuppressWarnings("deprecation")
-	protected void registerIn() {
-		Date d = new Date();
-		tin = d.getHours();
+	public void registerIn() {
+		if(flagin)
+		{
+			System.out.println("Can't register in");
+			return;
+		}
+		flagin = true;
+		tin = LocalDateTime.now().getHour();
 	}
 
-	@SuppressWarnings("deprecation")
-	protected void registerOut() {
+	public void registerOut() {
+		if(!flagin)
+		{
+			System.out.println("Can't register out");
+			return;
+		}
 		Date d = new Date();
-		tout = d.getHours();
+		tout = LocalDateTime.now().getHour();
 		nbOfHours = tout - tin;
 		if ((nbOfExtraHours = reqNbOfHours - nbOfHours) < 0) {
 			this.attend.add(false);
@@ -44,7 +46,7 @@ public class HourlyEmployee extends Employee {
 
 		} else {
 			if ((nbOfExtraHours = reqNbOfHours - nbOfHours) == 0) {
-				this.attend.add(true);
+				this.attend.add(false);
 				this.attendExtra.add(false);
 				this.nbOfHrs.add(new Integer(nbOfHours));
 			} else {
@@ -53,6 +55,7 @@ public class HourlyEmployee extends Employee {
 				this.nbOfHrs.add(new Integer(nbOfHours));
 			}
 		}
+		flagin=false;
 	}
 
 	// save
@@ -99,8 +102,7 @@ public class HourlyEmployee extends Employee {
 			if (attendExtra.get(i))
 				s += (nbOfHrs.get(i) - reqNbOfHours);
 		}
-		s = s / nbOfHrs.size();
-		return s;
+		return s / nbOfHrs.size();
 	}
-
+	
 }

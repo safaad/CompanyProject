@@ -15,16 +15,16 @@ public class PartTimeEmployee extends Employee {
 	private boolean flagin;
 	protected int Shift;// 1 for am 2 for pm
 
-	public PartTimeEmployee(String first, String last, int a, String shift) {
-		super(first, last, a);
-		if (shift.equals("am"))
+	public PartTimeEmployee(String first, String last, int [] birthday, String shift) {
+		super(first, last, birthday);
+		if (shift.equals("am") || shift.equals("AM"))
 			Shift = 1;
-		else
+		else if(shift.equals("pm") || shift.equals("PM"))
 			Shift = 2;
 	}
 
 	@SuppressWarnings("deprecation")
-	protected void registerIn() {
+	public void registerIn() {
 		Date d = new Date();
 		Time in = new Time(d.getHours(), d.getMinutes(), d.getSeconds());
 		if (Shift == 1) {
@@ -38,7 +38,7 @@ public class PartTimeEmployee extends Employee {
 	}
 
 	@SuppressWarnings("deprecation")
-	protected void registerOut() {
+	public void registerOut() {
 		Date d = new Date();
 		Time out = new Time(d.getHours(), d.getMinutes(), d.getSeconds());
 		if (flagin) {
@@ -77,12 +77,18 @@ public class PartTimeEmployee extends Employee {
 		}
 	}
 
-	protected void setSalary() {// for all shifts 500$ for extra shift 5 $
+	protected void setSalary() {// for all shifts 500$ for extra shift 10 $
 		int c = 0;
 		for (int i = 0; i < this.attendExtra.size(); i++)
 			if (attendExtra.get(i))
 				c++;
-		salary += 500 + c * 5;
+		salary += 500 + c * 10;
 	}
-
+	public double getExtraPay() {
+		double c = 0;
+		for (int i = 0; i < this.attendExtra.size(); i++)
+			if (attendExtra.get(i))
+				c++;
+		return c*10;
+	}
 }

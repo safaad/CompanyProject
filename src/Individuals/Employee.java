@@ -3,59 +3,42 @@ package Individuals;
 import java.util.Scanner;
 import java.util.ArrayList;
 
-public class Employee extends Person {
+public abstract class Employee extends Person {
 	Scanner in;
-	protected double salary = 1000;// basic
-	protected String username;
+	protected double salary = 1000;
+	protected String username, password;
 	protected boolean admin = false;
-	protected String password = null;
-	protected ArrayList<Boolean> attend;
-	protected ArrayList<Boolean> attendExtra;
+	protected ArrayList<Boolean> attend, attendExtra;
 
-	Employee(String first, String last, int a) {
-		super(first, last, a);
+	Employee(String first, String last, int [] birthday) {
+		super(first, last, birthday);
 		username = "" + fn.charAt(0) + fn.charAt(1) + fn.charAt(2) + "_" + ln.charAt(0) + ln.charAt(1) + ln.charAt(2);
 		attend = new ArrayList<Boolean>();
 		attendExtra = new ArrayList<Boolean>();
 	}
+	
 
 	public void setAdminstartor() {
 		admin = true;
-		setPassword();
 		setSalary();
 	}
-//	Employee(String first, String last, int a,String username,String password){
+	public boolean confirmPassword(String pass) { return pass.equals(password); }
 
-	//}
-	public boolean confirmPassword() {// this may be removed to driver
-		String pass;
-		System.out.println("please confirm your password first:");
-		pass = in.nextLine();
-		return pass.equals(password);
-	}
-
-	public void setPassword() {// it needs so many updates
-		String pass;
-		if (password != null) {
-			while (!confirmPassword());
-		}
-		do {
-			System.out.println("please enter the new password:");
-			pass = in.nextLine();
-			System.out.println("please reenter the password");
-			password = in.nextLine();
-		} while (!pass.equals(password));
-		System.out.println("logged in\n-------------------------");
-	}
-
-	protected void setSalary() {// 100$ for admin
+	public void setPassword(String pass) { password = pass; }
+	protected void setSalary() {
 		if (admin)
 			salary += 100;
 	}
-	public void setUsername(String username) {
-		this.username = username;
+	public void setUsername(String username) { this.username = username; }
+	public String getUsername() { return username; }
+	public void PrintAttendance() {
+		int i;
+		for(i=0;i<attend.size();i++)
+			System.out.print("Day "+ i+1 +" : "+ attend.get(i) + "  ||  ");
 	}
-	public String getUsername() {
-		return username;
+	public void PrintAttendanceExtra() {
+		int i;
+		for(i=0;i<attendExtra.size();i++)
+			System.out.print("Day "+ i+1 +" : "+ attendExtra.get(i) + "  ||  ");
 	}
 }
