@@ -28,13 +28,14 @@ public class HourlyEmployee extends Employee {
 		}
 		flagin = true;
 		tin = LocalDateTime.now().getHour();
+	
 	}
 
 	public void registerOut() {
 		if(!flagin)
 		{
 			System.out.println("Can't register out");
-			return;
+			return ;
 		}
 		Date d = new Date();
 		tout = LocalDateTime.now().getHour();
