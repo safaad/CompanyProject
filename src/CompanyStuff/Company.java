@@ -1,10 +1,8 @@
 package CompanyStuff;
 
-import Individuals.*;
-import Products.*;
+
 import java.util.ArrayList;
 
-<<<<<<< HEAD
 import Individuals.Client;
 import Individuals.Employee;
 import Individuals.HourlyEmployee;
@@ -17,35 +15,32 @@ public class Company {
 	public ArrayList<Product> Pr=new ArrayList<Product>();
 	//private double budget;
 	public static int maxNbofAdmins=5;
-=======
-public class Company {
-	public ArrayList<Employee> HE = new ArrayList<Employee>();
-	public ArrayList<Client> Consumer = new ArrayList<Client>();
-	public ArrayList<Product> Products = new ArrayList<Product>();
-
-	public Employee getEmployee(String user) {
-		for (Employee e : HE)
-			if (e.getUsername().equals(user))
-				return e;
-		return null;
-	}
-
->>>>>>> 6c08e62de3bb1a74168a8d56bbd9dad99ed4550d
 	public boolean exist(String user) {
-		for (int i = 0; i < HE.size(); i++)
-			if (HE.get(i).getUsername().equals(user))
+		for(Employee e : HE)
+			if(e.getUsername().equals(user))
 				return true;
 		return false;
 	}
-
-	public boolean isProductExists(Product p) {
-		for (Product p2 : Products) {
-			if (p2.equals(p))
+	public boolean existProduct(String itemName) {
+		for(Product p : Pr) {
+			if(p.getItemName().equals(itemName))
 				return true;
 		}
 		return false;
 	}
-<<<<<<< HEAD
+	public Product getProduct(String itemName) {
+		for(Product p : Pr) {
+			if(p.getItemName().equals(itemName))
+				return p;
+		}
+		return null;
+	}
+	public Employee getEmployee(String user) {
+		for(Employee e : HE)
+			if(e.getUsername().equals(user))
+				return e;
+		return null;
+	}
 	
 	public void PrintListOfEmployees() {
 		System.out.println("\n***List Of Employees in this Company are***\n--------------\n");
@@ -66,15 +61,4 @@ public class Company {
 		}
 		System.out.println("------------------");
 	}
-=======
-
-	public boolean deleteProduct(Product p) {
-		if (this.isProductExists(p)) {
-			this.Products.remove(p);
-			return true;
-		}
-		return false;
-	}
-
->>>>>>> 6c08e62de3bb1a74168a8d56bbd9dad99ed4550d
 }
