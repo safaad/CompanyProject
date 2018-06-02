@@ -14,12 +14,14 @@ public class PartTimeEmployee extends Employee {
 	private Time pmOut = new Time(0, 0, 0);
 	private boolean flagin;
 	protected int Shift;// 1 for am 2 for pm
+	private String shift;
 
-	public PartTimeEmployee(String first, String last, int [] birthday, String shift) {
+	public PartTimeEmployee(String first, String last, int[] birthday, String shift) {
 		super(first, last, birthday);
+		this.shift = shift;
 		if (shift.equals("am") || shift.equals("AM"))
 			Shift = 1;
-		else if(shift.equals("pm") || shift.equals("PM"))
+		else if (shift.equals("pm") || shift.equals("PM"))
 			Shift = 2;
 	}
 
@@ -84,11 +86,16 @@ public class PartTimeEmployee extends Employee {
 				c++;
 		salary += 500 + c * 10;
 	}
+
 	public double getExtraPay() {
 		double c = 0;
 		for (int i = 0; i < this.attendExtra.size(); i++)
 			if (attendExtra.get(i))
 				c++;
-		return c*10;
+		return c * 10;
+	}
+
+	public String toString() {
+		return super.toString() + "he is an PartTimeEmployee \nshift " + this.shift + "-----------------\n";
 	}
 }

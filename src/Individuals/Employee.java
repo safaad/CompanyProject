@@ -41,4 +41,10 @@ public abstract class Employee extends Person {
 		for(i=0;i<attendExtra.size();i++)
 			System.out.print("Day "+ i+1 +" : "+ attendExtra.get(i) + "  ||  ");
 	}
+	public String toString() {
+		String s="Employee  " +super.toString();
+		s+="UserName : " + getUsername() +"\n";
+		return s;
+	}
+	
 }

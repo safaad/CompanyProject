@@ -1,6 +1,6 @@
 package Individuals;
 
-import java.util.Date;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -37,7 +37,7 @@ public class HourlyEmployee extends Employee {
 			System.out.println("Can't register out");
 			return ;
 		}
-		Date d = new Date();
+		
 		tout = LocalDateTime.now().getHour();
 		nbOfHours = tout - tin;
 		if ((nbOfExtraHours = reqNbOfHours - nbOfHours) < 0) {
@@ -105,5 +105,8 @@ public class HourlyEmployee extends Employee {
 		}
 		return s / nbOfHrs.size();
 	}
-	
+	public String toString() {
+		return super.toString() + "he is an HourlyEmployee \nnb of req hours " + this.nbOfHours
+				+"-----------------\n";
+	}
 }
