@@ -5,6 +5,7 @@ import java.util.Scanner;
 import Individuals.Employee;
 import Individuals.HourlyEmployee;
 import Individuals.PartTimeEmployee;
+import Products.Product;
 
 public class EmployeeDriver {
 	Scanner scan = new Scanner(System.in);
@@ -82,7 +83,7 @@ public class EmployeeDriver {
 			if (!shift.equals("am") && !shift.equals("AM") && !shift.equals("pm") && !shift.equals("PM")) {
 				return null;
 			}
-					
+
 			PTE1 = new PartTimeEmployee(fn, ln, a, shift);
 			System.out.println("Enter new password");
 
@@ -133,6 +134,19 @@ public class EmployeeDriver {
 			PTE1 = (PartTimeEmployee) emp;
 			PTE1.registerIn();
 			System.out.println(PTE1.getExtraPay() + " $");
+		}
+	}
+
+	public void addToStock(String itemName, int qt) {
+		if (Driver.Website.existProduct(itemName)) {
+			Driver.Website.getProduct(itemName).setQty(qt + Driver.Website.getProduct(itemName).getQty());
+		} else {
+			System.out.println("enter the product's price ");
+			float price = scan.nextFloat();
+			System.out.println("enter the product's netPrice ");
+			float netp = scan.nextFloat();
+			Driver.Website.Pr.add(new Product(itemName, price, netp, qt));
+
 		}
 	}
 

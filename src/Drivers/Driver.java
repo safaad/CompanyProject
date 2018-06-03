@@ -10,11 +10,15 @@ public class Driver {
 	public static Scanner scan = new Scanner(System.in);
 	public static Company Website = new Company();
 
-	
 	public static void clientLogin() {
 
 	}
-
+	public static void  AdminLogin() {
+		int choice;
+		boolean login,repeat;
+		
+		
+	}
 	public static void EmployeeLogin() {
 		int choice = 0, type = 0;
 		int[] a = new int[3];
@@ -32,7 +36,7 @@ public class Driver {
 				choice = scan.nextInt();
 				if (choice == 1) {
 					e = EmpD.signIn();
-				
+
 					if (e == null)
 						login = false;
 					else
@@ -45,15 +49,16 @@ public class Driver {
 						login = true;
 				}
 			}
-			if (e == null)
-				System.out.println("hi1");
+		
 			if (login) {
-				repeat1=true;
+				System.out.println("\n\nHello "+e.getUsername()+"\n                       ***Your Menu is***                        \n");
+				repeat1 = true;
 				while (repeat1) {
 					System.out.println("1-Register In:\n2-Register Out");
 					System.out.println(
 							"3-change password\n4-get extra payment\n5-get list attendance\n6-get list of extra attendance");
-					System.out.println("7-get username\n8-Back to menu\n9-Exit from Employee side");
+					System.out.println("7-add Products to stock");
+					System.out.println("8-get username\n9-Back to menu\n10-Exit from Employee side");
 					choice = scan.nextInt();
 					switch (choice) {
 					case 1:
@@ -77,13 +82,23 @@ public class Driver {
 						e.PrintAttendanceExtra();
 						break;
 					case 7:
+						System.out.println("enter the product Name and quantity:");
+						String n=scan.nextLine();
+						scan.nextLine();
+						int i=scan.nextInt();
+						EmpD.addToStock(n,i);
+						Website.getProduct(n).setItemName(n);
+						System.out.println("successfully added\n------------\n");
+						Website.PrintListOfProducts();
+						break;
+					case 8:
 						System.out.println(
 								"\n----------------\n" + "username is: " + e.getUsername() + "\n----------------\n");
-					case 8:
+					case 9:
 						login = false;
 						repeat1 = false;
 						break;
-					case 9:
+					case 10:
 						repeat1 = false;
 						repeat = false;
 						break;
@@ -110,7 +125,7 @@ public class Driver {
 				running = false;
 				break;
 			case 1:
-
+				AdminLogin();
 				break;
 			case 2:
 				EmployeeLogin();

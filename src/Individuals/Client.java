@@ -3,7 +3,7 @@ package Individuals;
 import java.util.ArrayList;
 import Drivers.*;
 
-import product.Product;
+import Products.Product;
 
 public class Client extends Person {
 	protected String Username;
