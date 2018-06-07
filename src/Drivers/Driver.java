@@ -1,24 +1,21 @@
-
 package Drivers;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import CompanyStuff.Company;
+import CompanyStuff.savePerson;
 import Individuals.*;
 
 public class Driver {
 	public static Scanner scan = new Scanner(System.in);
 	public static Company Website = new Company();
+	public static savePerson SP = new savePerson();
 
 	public static void clientLogin() {
 
 	}
-	public static void  AdminLogin() {
-		int choice;
-		boolean login,repeat;
-		
-		
-	}
+
 	public static void EmployeeLogin() {
 		int choice = 0, type = 0;
 		int[] a = new int[3];
@@ -28,12 +25,18 @@ public class Driver {
 		PartTimeEmployee PTE1 = null;
 		Employee e = null;
 		boolean repeat1 = true;
+
 		System.out.println("** Admin's hub **");
 		while (repeat) {
-
-			while (!login) {
-				System.out.println("(1) Login\t(2) Register");
-				choice = scan.nextInt();
+			tryAgain: while (!login) {
+				System.out.println("(1) Login\t(2) Register\n");
+				try {
+					choice = scan.nextInt();
+				} catch (InputMismatchException e3) {
+					System.out.println("Wrong input\n");
+					scan.nextLine();
+					continue tryAgain;
+				}
 				if (choice == 1) {
 					e = EmpD.signIn();
 
@@ -49,16 +52,16 @@ public class Driver {
 						login = true;
 				}
 			}
-		
+			if (e == null)
+				System.out.println("hi1");
 			if (login) {
-				System.out.println("\n\nHello "+e.getUsername()+"\n                       ***Your Menu is***                        \n");
+				// log that he logged in?
 				repeat1 = true;
 				while (repeat1) {
 					System.out.println("1-Register In:\n2-Register Out");
 					System.out.println(
 							"3-change password\n4-get extra payment\n5-get list attendance\n6-get list of extra attendance");
-					System.out.println("7-add Products to stock");
-					System.out.println("8-get username\n9-Back to menu\n10-Exit from Employee side");
+					System.out.println("7-get username\n8-Back to menu\n9-Exit from Employee side\n");
 					choice = scan.nextInt();
 					switch (choice) {
 					case 1:
@@ -69,7 +72,8 @@ public class Driver {
 						break;
 
 					case 3:
-						System.out.println("Enter new password");
+						System.out.println("Enter new password: ");
+						scan.nextLine();
 						String s = scan.nextLine();
 						e.setPassword(s);
 						break;
@@ -82,31 +86,29 @@ public class Driver {
 						e.PrintAttendanceExtra();
 						break;
 					case 7:
-						System.out.println("enter the product Name and quantity:");
-						String n=scan.nextLine();
-						scan.nextLine();
-						int i=scan.nextInt();
-						EmpD.addToStock(n,i);
-						Website.getProduct(n).setItemName(n);
-						System.out.println("successfully added\n------------\n");
-						Website.PrintListOfProducts();
-						break;
-					case 8:
 						System.out.println(
 								"\n----------------\n" + "username is: " + e.getUsername() + "\n----------------\n");
-					case 9:
+						break;
+					case 8:
 						login = false;
 						repeat1 = false;
 						break;
-					case 10:
+					case 9:
 						repeat1 = false;
 						repeat = false;
+						break;
+					case 10:
+
+						break;
+					case 11:
+
 						break;
 					default:
 						break;
 					}
 				}
 			}
+			// log that he logged off
 		}
 	}
 
@@ -115,17 +117,17 @@ public class Driver {
 		int choice;
 		// EmployeeDriver ED = new EmployeeDriver();
 		boolean running = true;
-
+		SP.read(); // File reading
 		while (running) {
-			System.out.print("Login as a\n(1) Client\t(2) Employee\n(3) Company Admin");
+			System.out.println("Login as a\n(1) Client\t(2) Employee\n(3) Company Admin\n(0)To terminate program");
 			choice = scan.nextInt();
 
 			switch (choice) {
 			case 0:
-				running = false;
+				running = false; // Termination then save all to files
 				break;
 			case 1:
-				AdminLogin();
+
 				break;
 			case 2:
 				EmployeeLogin();
@@ -135,6 +137,7 @@ public class Driver {
 				break;
 			}
 		}
+		SP.save(); // File saving
 	}
 
 }
