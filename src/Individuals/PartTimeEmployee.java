@@ -4,6 +4,10 @@ import java.util.Date;
 import java.sql.Time;
 
 public class PartTimeEmployee extends Employee {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	@SuppressWarnings("deprecation")
 	private Time amIn = new Time(8, 0, 0);
 	@SuppressWarnings("deprecation")

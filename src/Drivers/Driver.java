@@ -4,12 +4,13 @@ package Drivers;
 import java.util.Scanner;
 
 import CompanyStuff.Company;
+import CompanyStuff.savePerson;
 import Individuals.*;
 
 public class Driver {
 	public static Scanner scan = new Scanner(System.in);
 	public static Company Website = new Company(50000);
-
+	public static savePerson SP = new savePerson();
 	public static void clientLogin() {
 
 	}
@@ -69,6 +70,7 @@ public class Driver {
 
 					case 3:
 						System.out.println("Enter new password");
+						scan.nextLine();
 						String s = scan.nextLine();
 						e.setPassword(s);
 						break;
@@ -114,7 +116,7 @@ public class Driver {
 		int choice;
 		// EmployeeDriver ED = new EmployeeDriver();
 		boolean running = true;
-
+		SP.read();
 		while (running) {
 			System.out.print("Login as a\n(1) Client\t(2) Employee\n(3) Company Admin");
 			choice = scan.nextInt();
@@ -134,6 +136,7 @@ public class Driver {
 				break;
 			}
 		}
+		SP.save();
 	}
 
 }

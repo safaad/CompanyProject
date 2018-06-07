@@ -4,6 +4,10 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class HourlyEmployee extends Employee {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	protected int reqNbOfHours;
 	protected int nbOfHours = 0;
 	protected int nbOfExtraHours = 0;

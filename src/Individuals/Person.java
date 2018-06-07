@@ -1,10 +1,15 @@
 package Individuals;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Period;
 
-public class Person {
+public class Person implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	protected String fn, ln;
 	protected int age;
 

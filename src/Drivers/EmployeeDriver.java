@@ -1,5 +1,6 @@
 package Drivers;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.regex.PatternSyntaxException;
 
@@ -63,19 +64,28 @@ public class EmployeeDriver {
 		scan.nextLine();
 		do {
 			System.out.println("Birthdate :(dd/mm/yyyy) ");
-		
+
 			String birth = scan.nextLine();
-			try{
-				b = birth.split("/");}
-			catch(PatternSyntaxException e) {
-				b=null;
+			try {
+				b = birth.split("/");
+			} catch (PatternSyntaxException e) {
+				b = null;
 			}
-		} while (b.length != 3 || !b[0].matches("-?\\d+(\\.\\d+)?") || (Integer.parseInt(b[0])>31 || Integer.parseInt(b[0])<=0 ) || !b[1].matches("-?\\d+(\\.\\d+)?") ||  (Integer.parseInt(b[1])>12 || Integer.parseInt(b[1])<=0 ) ||  !b[2].matches("-?\\d+(\\.\\d+)?"));
+		} while (b.length != 3 || !b[0].matches("-?\\d+(\\.\\d+)?")
+				|| (Integer.parseInt(b[0]) > 31 || Integer.parseInt(b[0]) <= 0) || !b[1].matches("-?\\d+(\\.\\d+)?")
+				|| (Integer.parseInt(b[1]) > 12 || Integer.parseInt(b[1]) <= 0) || !b[2].matches("-?\\d+(\\.\\d+)?"));
 		a[0] = Integer.parseInt(b[0]);
 		a[1] = Integer.parseInt(b[1]);
 		a[2] = Integer.parseInt(b[2]);
 		System.out.println("(1) hourly or (2) part time ?");
-		type = scan.nextInt();
+		do {
+			try {
+				type = scan.nextInt();
+			} catch (InputMismatchException e) {
+				continue;
+			}
+		} while (type != 1 && type != 2);
+
 		if (type == 1) {
 			System.out.print("Enter the number of hours: ");
 			int x = scan.nextInt();

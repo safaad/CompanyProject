@@ -7,6 +7,10 @@ import CompanyStuff.Company;
 import java.util.ArrayList;
 
 public abstract class Employee extends Person {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	Scanner in;
 	protected double salary = 1000;
 	protected String username, password;
