@@ -1,6 +1,9 @@
 package Individuals;
 
 import java.util.Scanner;
+
+import CompanyStuff.Company;
+
 import java.util.ArrayList;
 
 public abstract class Employee extends Person {
@@ -12,13 +15,17 @@ public abstract class Employee extends Person {
 
 	Employee(String first, String last, int[] birthday) {
 		super(first, last, birthday);
-		username = "" + fn.charAt(0) + fn.charAt(1) + fn.charAt(2) + "_" + ln.charAt(0) + ln.charAt(1) + ln.charAt(2);
+		try{username = "" +fn.substring(0,3) + "_" + ln.substring(0,3);
+		}catch(StringIndexOutOfBoundsException e) {
+			username=fn+"-"+ln;
+		}
 		attend = new ArrayList<Boolean>();
 		attendExtra = new ArrayList<Boolean>();
 	}
 
 	public void setAdminstartor() {
 		admin = true;
+		Company.NbofAdmins++;
 		setSalary();
 	}
 
@@ -54,7 +61,9 @@ public abstract class Employee extends Person {
 		for (i = 0; i < attendExtra.size(); i++)
 			System.out.print("Day " + i + 1 + " : " + attendExtra.get(i) + "  ||  ");
 	}
-
+	public boolean getAdmin() {
+		return this.admin;
+	}
 	public String toString() {
 		String s = "Employee  " + super.toString();
 		s += "UserName : " + getUsername() + "\n";

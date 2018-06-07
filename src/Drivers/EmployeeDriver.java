@@ -1,6 +1,7 @@
 package Drivers;
 
 import java.util.Scanner;
+import java.util.regex.PatternSyntaxException;
 
 import Individuals.Employee;
 import Individuals.HourlyEmployee;
@@ -26,8 +27,13 @@ public class EmployeeDriver {
 			if (e instanceof PartTimeEmployee) {
 				type = 2;
 				PTE1 = (PartTimeEmployee) e;
-				System.out.println("Enter password");
-				String s = scan.nextLine();
+				int i = 4;
+				String s;
+				do {
+					System.out.println("Enter password : (" + i + " remaining attempts) ");
+					s = scan.nextLine();
+					i--;
+				} while (i > 0 && !PTE1.confirmPassword(s));
 				if (!PTE1.confirmPassword(s))
 					e = null;
 			} else {
@@ -53,9 +59,21 @@ public class EmployeeDriver {
 		 * ln.charAt(0) + ln.charAt(1) + ln.charAt(2); if ((e =
 		 * Driver.Website.getEmployee(user)) == null) return null;
 		 */
-		System.out.println("Birthdate :(dd/mm/yyyy) ");
-		for (int i = 0; i < 3; i++)
-			a[i] = scan.nextInt();
+		String[] b;
+		scan.nextLine();
+		do {
+			System.out.println("Birthdate :(dd/mm/yyyy) ");
+		
+			String birth = scan.nextLine();
+			try{
+				b = birth.split("/");}
+			catch(PatternSyntaxException e) {
+				b=null;
+			}
+		} while (b.length != 3 || !b[0].matches("-?\\d+(\\.\\d+)?") || (Integer.parseInt(b[0])>31 || Integer.parseInt(b[0])<=0 ) || !b[1].matches("-?\\d+(\\.\\d+)?") ||  (Integer.parseInt(b[1])>12 || Integer.parseInt(b[1])<=0 ) ||  !b[2].matches("-?\\d+(\\.\\d+)?"));
+		a[0] = Integer.parseInt(b[0]);
+		a[1] = Integer.parseInt(b[1]);
+		a[2] = Integer.parseInt(b[2]);
 		System.out.println("(1) hourly or (2) part time ?");
 		type = scan.nextInt();
 		if (type == 1) {
@@ -78,11 +96,10 @@ public class EmployeeDriver {
 		}
 		if (type == 2) {
 			System.out.println("Enter your shift time (am/pm)");
-			scan.nextLine();
-			shift = scan.nextLine();
-			if (!shift.equals("am") && !shift.equals("AM") && !shift.equals("pm") && !shift.equals("PM")) {
-				return null;
-			}
+			do {
+				scan.nextLine();
+				shift = scan.nextLine();
+			} while (shift.compareToIgnoreCase("am") != 0 && shift.compareToIgnoreCase("pm") != 0);
 
 			PTE1 = new PartTimeEmployee(fn, ln, a, shift);
 			System.out.println("Enter new password");

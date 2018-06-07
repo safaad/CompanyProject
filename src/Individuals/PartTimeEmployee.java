@@ -19,9 +19,9 @@ public class PartTimeEmployee extends Employee {
 	public PartTimeEmployee(String first, String last, int[] birthday, String shift) {
 		super(first, last, birthday);
 		this.shift = shift;
-		if (shift.equals("am") || shift.equals("AM"))
+		if (shift.compareToIgnoreCase("am")==0)
 			Shift = 1;
-		else if (shift.equals("pm") || shift.equals("PM"))
+		else if (shift.compareToIgnoreCase("pm")==0)
 			Shift = 2;
 	}
 

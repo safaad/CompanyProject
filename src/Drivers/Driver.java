@@ -8,7 +8,7 @@ import Individuals.*;
 
 public class Driver {
 	public static Scanner scan = new Scanner(System.in);
-	public static Company Website = new Company();
+	public static Company Website = new Company(50000);
 
 	public static void clientLogin() {
 
@@ -16,7 +16,6 @@ public class Driver {
 	public static void  AdminLogin() {
 		int choice;
 		boolean login,repeat;
-		
 		
 	}
 	public static void EmployeeLogin() {

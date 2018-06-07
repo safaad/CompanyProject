@@ -9,12 +9,19 @@ import Individuals.PartTimeEmployee;
 import Products.Product;
 
 public class Company {
-	public ArrayList<Employee> HE = new ArrayList<Employee>();
-	public ArrayList<Client> Clients = new ArrayList<Client>();
-	public ArrayList<Product> Pr = new ArrayList<Product>();
-	// private double budget;
+	public ArrayList<Employee> HE ;
+	public ArrayList<Client> Clients;
+	public ArrayList<Product> Pr;
+	public ArrayList<Employee> Admins;
+	 private double budget;
 	public static int NbofAdmins = 0;
-
+	public Company(double budget) {
+		 HE = new ArrayList<Employee>();
+		 Clients = new ArrayList<Client>();
+		 Pr = new ArrayList<Product>();
+		 Admins=new ArrayList<Employee>();
+		 this.budget=budget;
+	}
 	public boolean exist(String user) {
 		for (Employee e : HE)
 			if (e.getUsername().equals(user))
