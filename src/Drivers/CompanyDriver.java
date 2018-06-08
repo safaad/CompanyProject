@@ -21,7 +21,7 @@ public class CompanyDriver {
 	Employee AdminSignIn() {
 		EmployeeDriver d=new EmployeeDriver();
 		Employee e=d.signIn();
-		if(e) {
+		if(e != null) {
 			if(e.getAdmin())
 				return e;
 			System.out.println("Not an admin");
