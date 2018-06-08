@@ -2,14 +2,18 @@ package Individuals;
 
 import java.util.ArrayList;
 import Drivers.*;
-
 import Products.Product;
 
 public class Client extends Person {
-	protected String Username;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	protected String Username, Password;
 	protected double contribution;
 	protected Employee FavoriteEmployee;
 	protected ArrayList<Product> boughtProducts;
+	public ArrayList<Product> WishList;
 	// protected ArrayList<Product> Cart;
 
 	public Client(String first, String last, int[] birthday, String username, double total, String EmpName) {
@@ -27,6 +31,16 @@ public class Client extends Person {
 		contribution = total;
 		boughtProducts = new ArrayList<Product>();
 		// Cart = new ArrayList<Product>();
+	}
+	
+	public Client(String fn, String ln, int[] birthday, String username, String password) {
+		super(fn, ln, birthday);
+		Username = username;
+		Password = password;
+	}
+	
+	public boolean verifyPassword(String password) {
+		return (this.Password.equals(password));
 	}
 
 	public String getUsername() {
