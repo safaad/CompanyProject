@@ -102,7 +102,7 @@ public class files {
 	public void readPerson() {
 		Object e = null;
 		Path p = Paths.get("Employees"), p2 = Paths.get("Size.txt"), p3 = Paths.get("Products"), p4 = Paths.get("Clients");
-		if (Files.notExists(p) || Files.notExists(p2) || Files.notExists(p3) | Files.notExists(p4)) {
+		if (Files.notExists(p) || Files.notExists(p2) || Files.notExists(p3) || Files.notExists(p4)) {
 			return;
 		}
 		try {

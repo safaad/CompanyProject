@@ -67,6 +67,23 @@ public class Company {
 				System.out.println(Pr.get(i));
 		System.out.println("------------------");
 	}
+	public void PrintListOfClients() {
+		System.out.println("\n***List Of Clients in this Company are***\n--------------\n");
+		for (int i = 0; i < Clients.size(); i++)
+			System.out.println(Clients.get(i));
+		System.out.println("--------------");
+	}
+	public void PrintListOfEmployeesAttendance() {
+		System.out.println("\n***List Of Employees in this Company are***\n--------------\n");
+		for (int i = 0; i < HE.size(); i++) {
+			if (HE.get(i) instanceof HourlyEmployee)
+				System.out.println(((HourlyEmployee) HE.get(i)));
+			else
+				System.out.println(((PartTimeEmployee) HE.get(i)));
+			HE.get(i).PrintAttendance();
+		System.out.println("--------------");
+		}
+	}
 	public  boolean exists(String username) {
 		for(Client c : Clients)
 			if(c.getUsername().equals(username))
@@ -79,4 +96,5 @@ public class Company {
 				return c;
 		return null;
 	}
+	
 }

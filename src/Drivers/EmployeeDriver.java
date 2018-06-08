@@ -20,6 +20,20 @@ public class EmployeeDriver {
 	public Employee e;
 	public boolean repeat1 = true;
 
+	public boolean verifyPassword(Employee e) {
+		int i = 4;
+		String s;
+		do {
+			System.out.print("Enter password : (" + i + " remaining attempts): ");
+			s = scan.nextLine();
+			i--;
+		} while (i > 0 && !e.confirmPassword(s));
+		if (!e.confirmPassword(s))
+			return false;
+		return true;
+
+	}
+
 	Employee signIn() {
 		System.out.print("Username: ");
 		fn = scan.nextLine();
@@ -28,21 +42,13 @@ public class EmployeeDriver {
 			if (e instanceof PartTimeEmployee) {
 				type = 2;
 				PTE1 = (PartTimeEmployee) e;
-				int i = 4;
-				String s;
-				do {
-					System.out.print("Enter password : (" + i + " remaining attempts): ");
-					s = scan.nextLine();
-					i--;
-				} while (i > 0 && !PTE1.confirmPassword(s));
-				if (!PTE1.confirmPassword(s))
+			
+				if (!verifyPassword(PTE1))
 					e = null;
 			} else {
 				type = 1;
 				HE1 = (HourlyEmployee) e;
-				System.out.print("Enter password: ");
-				String s = scan.nextLine();
-				if (!HE1.confirmPassword(s))
+				if (!verifyPassword(HE1))
 					e = null;
 			}
 		} else

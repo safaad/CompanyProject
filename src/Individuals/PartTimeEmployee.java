@@ -98,7 +98,18 @@ public class PartTimeEmployee extends Employee {
 				c++;
 		return c * 10;
 	}
-
+	public int getNbofShifts() {
+		int c=0;
+		for(int i=0;i<this.attend.size();i++) {
+			if(attend.get(i)) {
+				c++;
+				if(attendExtra.get(i)) {
+					c++;
+				}
+			}
+		}
+		return c;
+	}
 	public String toString() {
 		return super.toString() + "he is an PartTimeEmployee \nshift " + this.shift + "-----------------\n";
 	}

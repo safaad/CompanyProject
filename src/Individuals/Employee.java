@@ -6,7 +6,7 @@ import CompanyStuff.Company;
 
 import java.util.ArrayList;
 
-public abstract class Employee extends Person {
+public  class Employee extends Person {
 	/**
 	 * 
 	 */

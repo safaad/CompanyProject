@@ -98,6 +98,16 @@ public class HourlyEmployee extends Employee {
 		return reqNbOfHours;
 	}
 
+	public int getTotalNbOfWorkedHours() {
+		int c = 0;
+		for (int i = 0; i < this.nbOfHrs.size(); i++) {
+			c += nbOfHrs.get(i);
+
+		}
+		return c;
+
+	}
+
 	public double getAverageExtraWorkedHrs() {
 		double s = 0;
 		for (int i = 0; i < this.nbOfHrs.size(); i++) {

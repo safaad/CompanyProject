@@ -19,16 +19,9 @@ public class CompanyDriver {
 	public boolean repeat1 = true;
 
 	Employee AdminSignIn() {
-<<<<<<< HEAD
 		Employee e = Driver.EmpD.signIn();
 		if (e != null) {
 			if (e.getAdmin())
-=======
-		EmployeeDriver d=new EmployeeDriver();
-		Employee e=d.signIn();
-		if(e != null) {
-			if(e.getAdmin())
->>>>>>> ab45f91305b06d0d72e4e05d317cce52888fec97
 				return e;
 			System.out.println("Not an admin");
 		}
@@ -45,7 +38,7 @@ public class CompanyDriver {
 		System.out.println("this employee don't even exist!!");
 
 	}
-
+	
 	public void removeProduct(String itemName) {
 		if(Driver.Website.getProduct(itemName)!=null) {
 			Driver.Website.Pr.remove(Driver.Website.getProduct(itemName));
@@ -74,5 +67,34 @@ public class CompanyDriver {
 		// an admin can enter here he can add another admin hhe has the accessibilty to
 		// see employees clients and orders and products hik btzakar till now
 	}
-
+	public HourlyEmployee getEmployeeOfMonthH() {
+		int min=100000;
+		HourlyEmployee he=null;
+		
+		for(int i=0;i<Driver.Website.HE.size();i++) {
+			Employee e=Driver.Website.HE.get(i);
+			if(e instanceof HourlyEmployee) {
+				if(min < ((HourlyEmployee)e).getTotalNbOfWorkedHours()) {
+					min=((HourlyEmployee)e).getTotalNbOfWorkedHours();
+					he=((HourlyEmployee)e);
+				}
+			}
+		}
+	return he;
+	}
+	public PartTimeEmployee getEmployeeOfMonthP() {
+		int min=100000;
+		 PartTimeEmployee pe=null;
+		
+		for(int i=0;i<Driver.Website.HE.size();i++) {
+			Employee e=Driver.Website.HE.get(i);
+			if(e instanceof  PartTimeEmployee) {
+				if(min < (( PartTimeEmployee)e).getNbofShifts()) {
+					min=(( PartTimeEmployee)e).getNbofShifts();
+					pe=(( PartTimeEmployee)e);
+				}
+			}
+		}
+	return pe;
+	}
 }
