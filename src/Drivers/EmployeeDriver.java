@@ -21,7 +21,7 @@ public class EmployeeDriver {
 	public boolean repeat1 = true;
 
 	Employee signIn() {
-		System.out.println("Username:\t");
+		System.out.print("Username: ");
 		fn = scan.nextLine();
 		e = Driver.Website.getEmployee(fn);
 		if (e != null) {
@@ -31,7 +31,7 @@ public class EmployeeDriver {
 				int i = 4;
 				String s;
 				do {
-					System.out.println("Enter password : (" + i + " remaining attempts) ");
+					System.out.print("Enter password : (" + i + " remaining attempts): ");
 					s = scan.nextLine();
 					i--;
 				} while (i > 0 && !PTE1.confirmPassword(s));
@@ -40,20 +40,20 @@ public class EmployeeDriver {
 			} else {
 				type = 1;
 				HE1 = (HourlyEmployee) e;
-				System.out.println("Enter password");
+				System.out.print("Enter password: ");
 				String s = scan.nextLine();
 				if (!HE1.confirmPassword(s))
 					e = null;
 			}
 		} else
-			System.out.println("Wrong username or password.");
+			System.out.println("Wrong username or password!");
 		return e;
 	}
 
 	Employee signUp() {
-		System.out.println("Enter first name: ");
+		System.out.print("Enter first name: ");
 		fn = scan.next();
-		System.out.println("Enter last name: ");
+		System.out.print("Enter last name: ");
 		ln = scan.next();
 		/*
 		 * String user = "" + fn.charAt(0) + fn.charAt(1) + fn.charAt(2) + "_" +
@@ -63,7 +63,7 @@ public class EmployeeDriver {
 		String[] b;
 		scan.nextLine();
 		do {
-			System.out.println("Birthdate :(dd/mm/yyyy) ");
+			System.out.print("Birthdate (dd/mm/yyyy): ");
 
 			String birth = scan.nextLine();
 			try {
@@ -77,7 +77,7 @@ public class EmployeeDriver {
 		a[0] = Integer.parseInt(b[0]);
 		a[1] = Integer.parseInt(b[1]);
 		a[2] = Integer.parseInt(b[2]);
-		System.out.println("(1) hourly or (2) part time ?");
+		System.out.print("(1) Hourly or (2) Part time ? ");
 		do {
 			try {
 				type = scan.nextInt();
@@ -91,7 +91,7 @@ public class EmployeeDriver {
 			int x = scan.nextInt();
 
 			HE1 = new HourlyEmployee(fn, ln, a, x);
-			System.out.println("Enter new password");
+			System.out.print("Enter new password: ");
 			scan.nextLine();
 			String s = scan.nextLine();
 
@@ -105,16 +105,14 @@ public class EmployeeDriver {
 			}
 		}
 		if (type == 2) {
-			System.out.println("Enter your shift time (am/pm)");
+			System.out.print("Enter your shift time (am/pm): ");
 			do {
 				scan.nextLine();
 				shift = scan.nextLine();
 			} while (shift.compareToIgnoreCase("am") != 0 && shift.compareToIgnoreCase("pm") != 0);
 
 			PTE1 = new PartTimeEmployee(fn, ln, a, shift);
-			System.out.println("Enter new password");
-
-			scan.nextLine();
+			System.out.print("Enter new password: ");
 			String s = scan.nextLine();
 			if (!Driver.Website.exist(PTE1.getUsername())) {
 
@@ -137,7 +135,7 @@ public class EmployeeDriver {
 			PTE1 = (PartTimeEmployee) emp;
 			PTE1.registerIn();
 		}
-		System.out.println("You successfully signed in\n");
+		System.out.println("You successfully signed in!\n");
 	}
 
 	public void checkOut(Employee emp) {
@@ -149,7 +147,7 @@ public class EmployeeDriver {
 			PTE1 = (PartTimeEmployee) emp;
 			PTE1.registerOut();
 		}
-		System.out.println("You successfully signed out \n");
+		System.out.println("You successfully signed out! \n");
 	}
 
 	public void showExtraPay(Employee emp) {
@@ -165,16 +163,17 @@ public class EmployeeDriver {
 	}
 
 	public void addToStock(String itemName, int qt) {
+		Product p;
 		if (Driver.Website.existProduct(itemName)) {
 			Driver.Website.getProduct(itemName).setQty(qt + Driver.Website.getProduct(itemName).getQty());
 		} else {
-			System.out.println("enter the product's price ");
+			System.out.print("Enter the product's price: ");
 			float price = scan.nextFloat();
-			System.out.println("enter the product's netPrice ");
+			System.out.print("Enter the product's netPrice: ");
 			float netp = scan.nextFloat();
-			Driver.Website.Pr.add(new Product(itemName, price, netp, qt));
-
+			p = new Product(itemName, price, netp, qt);
+			Driver.Website.Pr.add(p);
+			System.out.println(p);
 		}
 	}
-
 }
