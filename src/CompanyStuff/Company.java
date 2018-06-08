@@ -13,7 +13,7 @@ public class Company {
 	public ArrayList<Client> Clients;
 	public ArrayList<Product> Pr;
 	public ArrayList<Employee> Admins;
-	 private double budget;
+	private double budget;
 	public static int NbofAdmins = 0;
 	public Company(double budget) {
 		 HE = new ArrayList<Employee>();
@@ -30,18 +30,16 @@ public class Company {
 	}
 
 	public boolean existProduct(String itemName) {
-		for (Product p : Pr) {
+		for (Product p : Pr)
 			if (p.getItemName().equals(itemName))
 				return true;
-		}
 		return false;
 	}
 
 	public Product getProduct(String itemName) {
-		for (Product p : Pr) {
+		for (Product p : Pr)
 			if (p.getItemName().equals(itemName))
 				return p;
-		}
 		return null;
 	}
 
@@ -54,22 +52,19 @@ public class Company {
 
 	public void PrintListOfEmployees() {
 		System.out.println("\n***List Of Employees in this Company are***\n--------------\n");
-		for (int i = 0; i < HE.size(); i++) {
+		for (int i = 0; i < HE.size(); i++)
 			if (HE.get(i) instanceof HourlyEmployee)
 				System.out.println(((HourlyEmployee) HE.get(i)));
 			else
 				System.out.println(((PartTimeEmployee) HE.get(i)));
-		}
 		System.out.println("--------------");
 	}
 
 	public void PrintListOfProducts() {
-		System.out.println("\n***List Of Products are ***\n---------------\n");
-		for (int i = 0; i < Pr.size(); i++) {
-			if (Pr.get(i).getQty() != 0) {
+		System.out.println("\n***List Of Products are ***\n---------------\nProduct\tPrice\n");
+		for (int i = 0; i < Pr.size(); i++)
+			if (Pr.get(i).getQty() != 0)
 				System.out.println(Pr.get(i));
-			}
-		}
 		System.out.println("------------------");
 	}
 	public  boolean exists(String username) {

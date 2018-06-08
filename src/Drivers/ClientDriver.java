@@ -31,6 +31,7 @@ public class ClientDriver {
 		
 	}
 	
+<<<<<<< HEAD
     Client signIn() {
         String username, password;
         Client guest;
@@ -47,6 +48,23 @@ public class ClientDriver {
         return guest;
     }
 
+=======
+	Client signIn() {
+		String username, password;
+		Client guest;
+		System.out.print("Username: ");
+		username = scan.nextLine();
+		System.out.print("Password: ");
+		password = scan.nextLine();
+		guest = ClientDriver.getClient(username);
+		if (guest == null || !guest.verifyPassword(password)) {
+			System.out.println("Wrong username or password!");
+			return null;
+		}
+		System.out.println("Hello " + guest.getUsername() + "!");
+		return guest;
+	}
+>>>>>>> ab45f91305b06d0d72e4e05d317cce52888fec97
 	
 	Client signUp() {
 		int choice;

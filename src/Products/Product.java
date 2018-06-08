@@ -55,6 +55,6 @@ public class Product {
 	}
 
 	public String toString() {
-		return "" + itemName + "\t" + Price;
+		return itemName + "\t$" + Price;
 	}
 }

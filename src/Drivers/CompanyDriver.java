@@ -19,9 +19,16 @@ public class CompanyDriver {
 	public boolean repeat1 = true;
 
 	Employee AdminSignIn() {
+<<<<<<< HEAD
 		Employee e = Driver.EmpD.signIn();
 		if (e != null) {
 			if (e.getAdmin())
+=======
+		EmployeeDriver d=new EmployeeDriver();
+		Employee e=d.signIn();
+		if(e != null) {
+			if(e.getAdmin())
+>>>>>>> ab45f91305b06d0d72e4e05d317cce52888fec97
 				return e;
 			System.out.println("Not an admin");
 		}
