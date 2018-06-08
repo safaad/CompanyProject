@@ -72,4 +72,16 @@ public class Company {
 		}
 		System.out.println("------------------");
 	}
+	public  boolean exists(String username) {
+		for(Client c : Clients)
+			if(c.getUsername().equals(username))
+				return true;
+		return false;
+	}
+	public  Client getClient(String username) {
+		for(Client c : Clients)
+			if(c.getUsername().equals(username))
+				return c;
+		return null;
+	}
 }

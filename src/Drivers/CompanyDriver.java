@@ -19,17 +19,35 @@ public class CompanyDriver {
 	public boolean repeat1 = true;
 
 	Employee AdminSignIn() {
-		EmployeeDriver d=new EmployeeDriver();
-		Employee e=d.signIn();
-		if(e) {
-			if(e.getAdmin())
+		Employee e = Driver.EmpD.signIn();
+		if (e != null) {
+			if (e.getAdmin())
 				return e;
 			System.out.println("Not an admin");
 		}
 		return null;
 	}
-	
-	
+
+	public void removeEmp(String username) {
+		if (Driver.Website.getEmployee(username) != null) {
+			Driver.Website.HE.remove(Driver.Website.getEmployee(username));
+			Driver.SP.save();
+			System.out.println("Successfully removed !!");
+			return;
+		}
+		System.out.println("this employee don't even exist!!");
+
+	}
+
+	public void removeProduct(String itemName) {
+		if(Driver.Website.getProduct(itemName)!=null) {
+			Driver.Website.Pr.remove(Driver.Website.getProduct(itemName));
+			Driver.SP.save();
+			System.out.println("Successfully removed !!");
+			return;
+		}
+		System.out.println("this product don't even exist !!");
+	}
 
 	public void setAdmin(String username) throws AdminsException {
 		try {
