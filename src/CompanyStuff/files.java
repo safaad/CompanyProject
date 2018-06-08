@@ -3,7 +3,6 @@ package CompanyStuff;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -16,10 +15,9 @@ import Drivers.Driver;
 import Individuals.*;
 import Products.Product;
 
-public class savePerson {
+public class files {
 	private ObjectInputStream EmpRead;
 	private FileInputStream EmpFileInput;
-
 	private ObjectOutputStream EmpWrite;
 	private FileOutputStream EmpFileOutput;
 
@@ -30,31 +28,42 @@ public class savePerson {
 
 	private DataOutputStream sizeOutputStream;
 	private DataInputStream sizeInputStream;
+	
+	private ObjectInputStream CRead;
+	private FileInputStream CFileInput;
+	private ObjectOutputStream CWrite;
+	private FileOutputStream CFileOutput;
 
 	public int sizeOfEmployees = 0;
 	private int sizeOfProducts = 0;
 	private int sizeOfClients = 0;
 
-	public void initializeSize() {
+	public boolean initializeSize() {
+		Path p = Paths.get("Size.txt");
+		if(Files.notExists(p))
+			return false;
 		try {
 			FileInputStream k = new FileInputStream("Size.txt");
 			sizeInputStream = new DataInputStream(k);
 
 			sizeOfEmployees = sizeInputStream.readInt();
 			sizeInputStream.readChar(); // reads the \n
-			sizeOfProducts = sizeInputStream.readInt();
-			sizeInputStream.readChar(); // reads the \n
 			sizeOfClients = sizeInputStream.readInt();
 			sizeInputStream.readChar(); // reads the \n
+			sizeOfProducts = sizeInputStream.readInt();
+			sizeInputStream.readChar(); // reads the \n
+			if(sizeOfEmployees == 0 && sizeOfClients == 0 && sizeOfProducts == 0) {
+				return false;
+			}
 		} catch (IOException e) {
-			e.printStackTrace();
+			return false;
 		}
-
+		return true;
 	}
 
 	public void openEmployeeFileOutputMode() {
 		try {
-			EmpFileOutput = new FileOutputStream("Employee");
+			EmpFileOutput = new FileOutputStream("Employees");
 			EmpWrite = new ObjectOutputStream(EmpFileOutput);
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -62,7 +71,7 @@ public class savePerson {
 
 	}
 
-	public void saveEmployees() {
+	public void savePerson() {
 		for (Employee E : Driver.Website.HE)
 			try {
 				if (E instanceof HourlyEmployee)
@@ -72,11 +81,18 @@ public class savePerson {
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
+		for(Client c : Driver.Website.Clients)
+			try {
+				CWrite.writeObject(c);
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
 		sizeOfEmployees = Driver.Website.HE.size();
+		sizeOfClients = Driver.Website.Clients.size();
 		try {
-			sizeOutputStream.writeInt(Driver.Website.HE.size());
+			sizeOutputStream.writeInt(sizeOfEmployees);
 			sizeOutputStream.writeChar('\n');
-			sizeOutputStream.writeInt(Driver.Website.Clients.size());
+			sizeOutputStream.writeInt(sizeOfClients);
 			sizeOutputStream.writeChar('\n');
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -85,20 +101,15 @@ public class savePerson {
 
 	public void readPerson() {
 		Object e = null;
-		Path p = Paths.get("Employee"), p2 = Paths.get("Size.txt");
-		if (Files.notExists(p) || Files.notExists(p2)) {
+		Path p = Paths.get("Employees"), p2 = Paths.get("Size.txt"), p3 = Paths.get("Products"), p4 = Paths.get("Clients");
+		if (Files.notExists(p) || Files.notExists(p2) || Files.notExists(p3) | Files.notExists(p4)) {
 			return;
 		}
 		try {
-			EmpFileInput = new FileInputStream("Employee");
+			EmpFileInput = new FileInputStream("Employees");
 			EmpRead = new ObjectInputStream(EmpFileInput);
-
-			FileInputStream k = new FileInputStream("Size.txt");
-			sizeInputStream = new DataInputStream(k);
-			sizeOfEmployees = sizeInputStream.readInt();
-			sizeInputStream.readChar();
-			sizeOfProducts = sizeInputStream.readInt();
-			sizeInputStream.readChar(); // reads the \n
+			CFileInput = new FileInputStream("Clients");
+			CRead = new ObjectInputStream(CFileInput);
 		} catch (IOException e1) {
 			return;
 		}
@@ -112,6 +123,14 @@ public class savePerson {
 					Driver.Website.HE.add((PartTimeEmployee) e);
 				}
 
+			} catch (ClassNotFoundException | IOException e2) {
+				e2.printStackTrace();
+			}
+		}
+		for (int i = sizeOfClients; i > 0; i--) {
+			try {
+				e = CRead.readObject();
+				Driver.Website.Clients.add((Client)e);
 			} catch (ClassNotFoundException | IOException e2) {
 				e2.printStackTrace();
 			}
@@ -151,6 +170,14 @@ public class savePerson {
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
+		try {
+			sizeOfProducts = Driver.Website.Pr.size();
+			sizeOutputStream.writeInt(sizeOfProducts);
+			sizeOutputStream.writeChar('\n');
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 	public void readProducts() {
@@ -165,16 +192,10 @@ public class savePerson {
 		} catch (IOException e1) {
 			return;
 		}
-		for (int i = sizeOfEmployees; i > 0; i--) {
+		for (int i = sizeOfProducts; i > 0; i--) {
 			try {
-				e = EmpRead.readObject();
-
-				if (e instanceof HourlyEmployee) {
-					Driver.Website.HE.add((HourlyEmployee) e);
-				} else {
-					Driver.Website.HE.add((PartTimeEmployee) e);
-				}
-
+				e = (Product) PrRead.readObject();
+				Driver.Website.Pr.add((Product) e);
 			} catch (ClassNotFoundException | IOException e2) {
 				e2.printStackTrace();
 			}
@@ -201,13 +222,23 @@ public class savePerson {
 		try {
 			FileOutputStream k = new FileOutputStream("Size.txt");
 			sizeOutputStream = new DataOutputStream(k);
-		} catch (IOException e) {
+			//The file Size.txt will always start with 0\n0\n0\n
+			sizeOutputStream.writeInt(0); // 0 employees
+			sizeOutputStream.writeChar('\n');
+			sizeOutputStream.writeInt(0); // 0 clients
+			sizeOutputStream.writeChar('\n');
+			sizeOutputStream.writeInt(0); // 0 products
+			sizeOutputStream.writeChar('\n');
+			} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
 	public void closeSizeFile() {
 		try {
+			if(sizeInputStream != null) {
+				sizeInputStream.close();
+			}
 			if (sizeOutputStream != null) {
 				sizeOutputStream.flush();
 				sizeOutputStream.close();
@@ -216,29 +247,60 @@ public class savePerson {
 			e.printStackTrace();
 		}
 	}
+	
+	public void openClientsFile(){
+		try {
+			CFileOutput = new FileOutputStream("Clients");
+			CWrite = new ObjectOutputStream(CFileOutput);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void closeClientsFile() {
+		try {
+			if (CRead != null) {
+				CRead.close();
+				CFileInput.close();
+			}
+			if (CWrite != null) {
+				CFileOutput.close();
+				CWrite.flush();
+				CWrite.close();
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
 	public void read() {
-		readPerson();
-		readProducts();
-		closeAllFiles();
+		if(!initializeSize()) { // get the size of lists from the size.txt
+			return;
+		}
+		readPerson(); // read persons to the list
+		readProducts(); // read products to the list
+		closeAllFiles(); // close the files and continue on with the program
 	}
 
 	public void save() {
 		openAllFiles();
-		saveEmployees();
+		savePerson();
 		saveProducts();
 		closeAllFiles();
 	}
 
 	public void openAllFiles() {
-		initializeSize();
 		openSizeFile();
 		openEmployeeFileOutputMode();
+		openProductsFile();
+		openClientsFile();
 	}
 
 	public void closeAllFiles() {
 		closeSizeFile();
 		closeEmployeeFile();
+		closeProductsFile();
+		closeClientsFile();
 	}
 
 }
