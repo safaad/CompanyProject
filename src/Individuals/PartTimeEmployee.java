@@ -111,6 +111,6 @@ public class PartTimeEmployee extends Employee {
 		return c;
 	}
 	public String toString() {
-		return super.toString() + "he is an PartTimeEmployee \nshift " + this.shift + "-----------------\n";
+		return super.toString() + " PartTimeEmployee \nshift " + this.shift + "-----------------\n";
 	}
 }

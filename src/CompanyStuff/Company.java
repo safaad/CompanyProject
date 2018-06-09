@@ -54,9 +54,10 @@ public class Company {
 		System.out.println("\n***List Of Employees in this Company are***\n--------------\n");
 		for (int i = 0; i < HE.size(); i++)
 			if (HE.get(i) instanceof HourlyEmployee)
-				System.out.println(((HourlyEmployee) HE.get(i)));
-			else
-				System.out.println(((PartTimeEmployee) HE.get(i)));
+				System.out.println(((HourlyEmployee)HE.get(i)));
+			else {if(HE.get(i) instanceof HourlyEmployee)
+				System.out.println(((PartTimeEmployee)HE.get(i)));
+				}
 		System.out.println("--------------");
 	}
 
@@ -72,6 +73,18 @@ public class Company {
 		for (int i = 0; i < Clients.size(); i++)
 			System.out.println(Clients.get(i));
 		System.out.println("--------------");
+	}
+	public void printListOfAdmins() {
+		System.out.println("\n***List Of Admins in this Company are***\n--------------\n");
+		for (int i = 0; i < Admins.size(); i++)
+			System.out.println(Admins.get(i));
+		System.out.println("--------------");
+	}
+	public Employee getAdministrator(String username) {
+		for (Employee e : Admins)
+			if (e.getUsername().equals(username))
+				return e;
+		return null;
 	}
 	public void PrintListOfEmployeesAttendance() {
 		System.out.println("\n***List Of Employees in this Company are***\n--------------\n");

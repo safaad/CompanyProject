@@ -1,6 +1,7 @@
 
 package Drivers;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import CompanyStuff.*;
@@ -28,6 +29,7 @@ public class Driver {
 				System.out.println("Unsuccessful logging in !!");
 				return;
 			}
+			login = true;
 
 			if (login) {
 				System.out.println("\n\nHello " + e.getUsername() + "!\n\t\t\t*** Menu ***\t\t\t\n");
@@ -36,8 +38,8 @@ public class Driver {
 					System.out.println("1-\tSet another Admin\n2-\tRemove Admin/Employee");
 					System.out.println("3-\tGet Employee Of the month");
 					System.out.println("4-\tGet list Employees" + "\n5-\tGet list of attendance of all employees");
-					System.out.println("6-\tReset the salaries of the employees" + "7-\tGet list of products\n"
-							+ "8-\tRemove a Product\n" + "9-\t Get list of clients\n");
+					System.out.println("6-\tReset the salaries of the employees" + "\n7-\tGet list of products\n"
+							+ "8-\tRemove a Product\n" + "9-\t Get list of clients");
 					System.out.println("10-\tBack to menu" + "\n11-\tExit from Employee side");
 					choice = scan.nextInt();
 					switch (choice) {
@@ -112,8 +114,13 @@ public class Driver {
 		while (repeat) {
 
 			while (!login) {
-				System.out.println("(1) Login\t(2) Register");
-				choice = scan.nextInt();
+				System.out.println("(1) Login\t(2) Register\t(3) exit");
+				try {
+					choice = scan.nextInt();
+				} catch (InputMismatchException ex) {
+					System.out.print("Incorrect choice reEnter : ");
+					choice = scan.nextInt();
+				}
 				if (choice == 1) {
 					e = EmpD.signIn();
 
@@ -122,12 +129,17 @@ public class Driver {
 					else
 						login = true;
 				} else {
-					e = EmpD.signUp();
-					if (e == null)
-						login = false;
-					else
-						login = true;
+					if (choice == 2) {
+						e = EmpD.signUp();
+						if (e == null)
+							login = false;
+						else
+							login = true;
+					} else {
+						return;
+					}
 				}
+
 			}
 
 			if (login) {
@@ -239,11 +251,16 @@ public class Driver {
 	public static void main(String[] args) {
 		System.out.println("** Hello and Welcome! **");
 		int choice;
-		// EmployeeDriver ED = new EmployeeDriver();
 		boolean running = true;
 		SP.read();
+		//int a[] = { 12, 12, 1999 };
+		//Employee admin = new Employee("admin", "admin", a);
+		//admin.setPassword("admin");
+		//admin.setAdminstartor();
+		//Website.HE.add(admin);
+
 		while (running) {
-			System.out.println("Login as a\n(1) Client\t(2) Employee\n(3) Company Admin\n(0)\tto terminate");
+			System.out.println("**Login as a**\n\n(1) Client\t(2) Employee\n(3) Company Admin\t(0) to Terminate");
 			choice = scan.nextInt();
 
 			switch (choice) {
@@ -261,6 +278,7 @@ public class Driver {
 				break;
 			}
 		}
+
 		SP.save();
 	}
 

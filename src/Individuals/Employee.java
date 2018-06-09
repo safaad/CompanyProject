@@ -3,6 +3,7 @@ package Individuals;
 import java.util.Scanner;
 
 import CompanyStuff.Company;
+import Drivers.Driver;
 
 import java.util.ArrayList;
 
@@ -17,7 +18,7 @@ public  class Employee extends Person {
 	protected boolean admin = false;
 	protected ArrayList<Boolean> attend, attendExtra;
 
-	Employee(String first, String last, int[] birthday) {
+	public Employee(String first, String last, int[] birthday) {
 		super(first, last, birthday);
 		try{username = "" +fn.substring(0,3) + "_" + ln.substring(0,3);
 		}catch(StringIndexOutOfBoundsException e) {
@@ -30,7 +31,8 @@ public  class Employee extends Person {
 	public void setAdminstartor() {
 		admin = true;
 		Company.NbofAdmins++;
-		setSalary();
+		Driver.Website.Admins.add(this);
+		salary += 100;
 	}
 
 	public boolean confirmPassword(String pass) {
@@ -41,10 +43,6 @@ public  class Employee extends Person {
 		password = pass;
 	}
 
-	protected void setSalary() {
-		if (admin)
-			salary += 100;
-	}
 
 	public void setUsername(String username) {
 		this.username = username;

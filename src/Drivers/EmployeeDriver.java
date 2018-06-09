@@ -42,16 +42,21 @@ public class EmployeeDriver {
 			if (e instanceof PartTimeEmployee) {
 				type = 2;
 				PTE1 = (PartTimeEmployee) e;
-			
+
 				if (!verifyPassword(PTE1))
 					e = null;
 			} else {
-				type = 1;
-				HE1 = (HourlyEmployee) e;
-				if (!verifyPassword(HE1))
-					e = null;
+				if (e instanceof HourlyEmployee) {
+					type = 1;
+					HE1 = (HourlyEmployee) e;
+					if (!verifyPassword(HE1))
+						e = null;
+
+				}
 			}
-		} else
+		}
+
+		else
 			System.out.println("Wrong username or password!");
 		return e;
 	}
@@ -61,11 +66,6 @@ public class EmployeeDriver {
 		fn = scan.next();
 		System.out.print("Enter last name: ");
 		ln = scan.next();
-		/*
-		 * String user = "" + fn.charAt(0) + fn.charAt(1) + fn.charAt(2) + "_" +
-		 * ln.charAt(0) + ln.charAt(1) + ln.charAt(2); if ((e =
-		 * Driver.Website.getEmployee(user)) == null) return null;
-		 */
 		String[] b;
 		scan.nextLine();
 		do {
@@ -83,12 +83,14 @@ public class EmployeeDriver {
 		a[0] = Integer.parseInt(b[0]);
 		a[1] = Integer.parseInt(b[1]);
 		a[2] = Integer.parseInt(b[2]);
-		System.out.print("(1) Hourly or (2) Part time ? ");
+		
 		do {
 			try {
+				System.out.print("(1) Hourly or (2) Part time ? ");
 				type = scan.nextInt();
-			} catch (InputMismatchException e) {
-				continue;
+			} catch (InputMismatchException ex) {
+				scan.nextLine();
+				type=-1;
 			}
 		} while (type != 1 && type != 2);
 

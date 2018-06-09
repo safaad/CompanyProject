@@ -19,13 +19,21 @@ public class CompanyDriver {
 	public boolean repeat1 = true;
 
 	Employee AdminSignIn() {
-		Employee e = Driver.EmpD.signIn();
-		if (e != null) {
-			if (e.getAdmin())
-				return e;
-			System.out.println("Not an admin");
-		}
-		return null;
+			System.out.print("Username: ");
+			fn = scan.nextLine();
+			Employee e = Driver.Website.getAdministrator(fn);
+			if (e != null) {
+				if (!Driver.EmpD.verifyPassword(e)) {
+				System.out.println("Wrong username or password");
+					return null;
+					
+				}
+			}
+			else {
+				System.out.println("you are not admistrator in this company");
+			
+			}
+			return e;
 	}
 
 	public void removeEmp(String username) {
@@ -58,7 +66,6 @@ public class CompanyDriver {
 
 			} else {
 				Driver.Website.getEmployee(username).setAdminstartor();
-				Driver.Website.Admins.add(Driver.Website.getEmployee(username));
 			}
 		} catch (AdminsException e) {
 			System.out.println("NO More places");
