@@ -53,7 +53,8 @@ public class Company {
 	}
 
 	public void PrintListOfEmployees() {
-		System.out.println("\n***List Of Employees in this Company are***\n==================================================\n");
+		System.out.println(
+				"\n***List Of Employees in this Company are***\n==================================================\n");
 		for (int i = 0; i < HE.size(); i++)
 			if (HE.get(i) instanceof HourlyEmployee)
 				System.out.println(((HourlyEmployee) HE.get(i)));
@@ -73,14 +74,16 @@ public class Company {
 	}
 
 	public void PrintListOfClients() {
-		System.out.println("\n***List Of Clients in this Company are***\n==================================================\n");
+		System.out.println(
+				"\n***List Of Clients in this Company are***\n==================================================\n");
 		for (int i = 0; i < Clients.size(); i++)
 			System.out.println(Clients.get(i));
 		System.out.println("\n==================================================");
 	}
 
 	public void printListOfAdmins() {
-		System.out.println("\n***List Of Admins in this Company are***\n==================================================\n");
+		System.out.println(
+				"\n***List Of Admins in this Company are***\n==================================================\n");
 		for (int i = 0; i < Admins.size(); i++)
 			System.out.println(Admins.get(i));
 		System.out.println("\n==================================================");
@@ -94,7 +97,8 @@ public class Company {
 	}
 
 	public void PrintListOfEmployeesAttendance() {
-		System.out.println("\n***List Of Employees in this Company are***\n==================================================\n");
+		System.out.println(
+				"\n***List Of Employees in this Company are***\n==================================================\n");
 		for (int i = 0; i < HE.size(); i++) {
 			if (HE.get(i) instanceof HourlyEmployee) {
 				System.out.println(((HourlyEmployee) HE.get(i)));
@@ -107,6 +111,21 @@ public class Company {
 			}
 			System.out.println("\n==================================================");
 		}
+	}
+
+	public boolean alreadyExistEmployee(String fname, String lname) {
+		for (Employee e : HE) {
+			if (fname.compareToIgnoreCase(e.getFirstName()) == 0 && lname.compareToIgnoreCase(e.getLastName()) == 0)
+				return true;
+		}
+		return false;
+	}
+
+	public boolean alreadyExistsAdmin(String user) {
+		for (Employee e : Admins)
+			if (user.equals(e.getUsername()))
+				return true;
+		return false;
 	}
 
 	public boolean exists(String username) {

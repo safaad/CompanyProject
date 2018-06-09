@@ -67,6 +67,11 @@ public class CompanyDriver {
 	}
 
 	public void setAdmin(String username) throws AdminsException {
+		if(Driver.Website.alreadyExistsAdmin(username)) {
+			System.out.println("he is already an admin");
+			return;
+		}
+			
 		try {
 			if (Company.NbofAdmins == 5)
 				throw new AdminsException();
@@ -80,8 +85,7 @@ public class CompanyDriver {
 			System.out.println("NO MORE PLACES !!");
 			// go back to the menu
 		}
-		// an admin can enter here he can add another admin hhe has the accessibilty to
-		// see employees clients and orders and products hik btzakar till now
+	
 	}
 
 	public HourlyEmployee getEmployeeOfMonthH() {

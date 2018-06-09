@@ -66,6 +66,10 @@ public class EmployeeDriver {
 		fn = scan.next();
 		System.out.print("Enter last name: ");
 		ln = scan.next();
+		if(Driver.Website.alreadyExistEmployee(fn, ln)) {
+			System.out.println("you are already an employee");
+			return null;
+		}
 		String[] b;
 		scan.nextLine();
 		do {

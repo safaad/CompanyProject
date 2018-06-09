@@ -125,18 +125,19 @@ public class files {
 		}
 		for (int i = sizeOfEmployees; i > 0; i--) {
 			try {
-				e = EmpRead.readObject();
+                e = EmpRead.readObject();
+                if(((Employee) e).getAdmin()) {
+                    Driver.Website.Admins.add((Employee) e);
+                }
+                if (e instanceof HourlyEmployee) {
+                    Driver.Website.HE.add((HourlyEmployee) e);
+                }
+                else if (e instanceof PartTimeEmployee)
+                    Driver.Website.HE.add((PartTimeEmployee) e);
 
-				if (e instanceof HourlyEmployee) 
-					Driver.Website.HE.add((HourlyEmployee) e);
-				else if (e instanceof PartTimeEmployee)
-					Driver.Website.HE.add((PartTimeEmployee) e);
-				else
-					Driver.Website.HE.add((Employee) e);
-
-			} catch (ClassNotFoundException | IOException e2) {
-				e2.printStackTrace();
-			}
+            } catch (ClassNotFoundException | IOException e2) {
+                e2.printStackTrace();
+            }
 		}
 		for (int i = sizeOfClients; i > 0; i--) {
 			try {

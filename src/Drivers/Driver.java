@@ -39,7 +39,7 @@ public class Driver {
 					System.out.println("4-\tGet Employee Of the month");
 					System.out.println("5-\tGet list Employees" + "\n6-\tGet list of attendance of all employees");
 					System.out.println("7-\tReset the salaries of the employees" + "\n8-\tGet list of products\n"
-							+ "9-\tRemove a Product\n" + "10-\t Get list of clients");
+							+ "9-\tRemove a Product\n" + "10-\tGet list of clients");
 					System.out.println("11-\tBack to menu" + "\n12-\tExit from Employee side");
 					try {
 						choice = scan.nextInt();
@@ -279,7 +279,6 @@ public class Driver {
 		Employee admin = new Employee("admin", "admin", a);
 		admin.setPassword("admin");
 		admin.setAdminstartor();
-		Website.HE.add(admin);
 
 		while (running) {
 			System.out.println("**Login as a**\n\n(1) Client\t(2) Employee\n(3) Company Admin\t(0) to Terminate");
