@@ -72,15 +72,22 @@ public class files {
 	}
 
 	public void savePerson() {
-	
 		for (Employee E : Driver.Website.HE)
 			try {
-				FileOutputStream k=new FileOutputStream("Size.txt");
+				FileOutputStream k = new FileOutputStream("Size.txt");
 				sizeOutputStream = new DataOutputStream(k);
 				if (E instanceof HourlyEmployee)
 					EmpWrite.writeObject((HourlyEmployee) E);
-				else
+				else if(E instanceof PartTimeEmployee)
 					EmpWrite.writeObject((PartTimeEmployee) E);
+				else
+					EmpWrite.writeObject(E);
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+		for (Employee E : Driver.Website.Admins)
+			try {
+				EmpWrite.writeObject(E);
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
@@ -90,7 +97,7 @@ public class files {
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
-		sizeOfEmployees = Driver.Website.HE.size();
+		sizeOfEmployees = Driver.Website.HE.size() + Driver.Website.Admins.size();
 		sizeOfClients = Driver.Website.Clients.size();
 		try {
 			sizeOutputStream.writeInt(sizeOfEmployees);
@@ -120,11 +127,12 @@ public class files {
 			try {
 				e = EmpRead.readObject();
 
-				if (e instanceof HourlyEmployee) {
+				if (e instanceof HourlyEmployee) 
 					Driver.Website.HE.add((HourlyEmployee) e);
-				} else {
+				else if (e instanceof PartTimeEmployee)
 					Driver.Website.HE.add((PartTimeEmployee) e);
-				}
+				else
+					Driver.Website.HE.add((Employee) e);
 
 			} catch (ClassNotFoundException | IOException e2) {
 				e2.printStackTrace();
