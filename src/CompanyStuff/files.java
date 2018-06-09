@@ -72,8 +72,11 @@ public class files {
 	}
 
 	public void savePerson() {
+	
 		for (Employee E : Driver.Website.HE)
 			try {
+				FileOutputStream k=new FileOutputStream("Size.txt");
+				sizeOutputStream = new DataOutputStream(k);
 				if (E instanceof HourlyEmployee)
 					EmpWrite.writeObject((HourlyEmployee) E);
 				else
