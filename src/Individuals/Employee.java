@@ -67,8 +67,8 @@ public  class Employee extends Person {
 		return this.admin;
 	}
 	public String toString() {
-		String s = "Employee  " + super.toString();
-		s += "UserName : " + getUsername() + "\n";
+		String s = super.toString();
+		s += "\tUserName : " + getUsername() + "\n";
 		return s;
 	}
 

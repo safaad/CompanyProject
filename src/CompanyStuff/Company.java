@@ -9,19 +9,21 @@ import Individuals.PartTimeEmployee;
 import Products.Product;
 
 public class Company {
-	public ArrayList<Employee> HE ;
+	public ArrayList<Employee> HE;
 	public ArrayList<Client> Clients;
 	public ArrayList<Product> Pr;
 	public ArrayList<Employee> Admins;
 	private double budget;
 	public static int NbofAdmins = 0;
+
 	public Company(double budget) {
-		 HE = new ArrayList<Employee>();
-		 Clients = new ArrayList<Client>();
-		 Pr = new ArrayList<Product>();
-		 Admins=new ArrayList<Employee>();
-		 this.budget=budget;
+		HE = new ArrayList<Employee>();
+		Clients = new ArrayList<Client>();
+		Pr = new ArrayList<Product>();
+		Admins = new ArrayList<Employee>();
+		this.budget = budget;
 	}
+
 	public boolean exist(String user) {
 		for (Employee e : HE)
 			if (e.getUsername().equals(user))
@@ -51,14 +53,15 @@ public class Company {
 	}
 
 	public void PrintListOfEmployees() {
-		System.out.println("\n***List Of Employees in this Company are***\n--------------\n");
+		System.out.println("\n***List Of Employees in this Company are***\n==================================================\n");
 		for (int i = 0; i < HE.size(); i++)
 			if (HE.get(i) instanceof HourlyEmployee)
-				System.out.println(((HourlyEmployee)HE.get(i)));
-			else {if(HE.get(i) instanceof HourlyEmployee)
-				System.out.println(((PartTimeEmployee)HE.get(i)));
-				}
-		System.out.println("--------------");
+				System.out.println(((HourlyEmployee) HE.get(i)));
+			else {
+				if (HE.get(i) instanceof PartTimeEmployee)
+					System.out.println(((PartTimeEmployee) HE.get(i)));
+			}
+		System.out.println("\n==================================================");
 	}
 
 	public void PrintListOfProducts() {
@@ -68,46 +71,56 @@ public class Company {
 				System.out.println(Pr.get(i));
 		System.out.println("------------------");
 	}
+
 	public void PrintListOfClients() {
-		System.out.println("\n***List Of Clients in this Company are***\n--------------\n");
+		System.out.println("\n***List Of Clients in this Company are***\n==================================================\n");
 		for (int i = 0; i < Clients.size(); i++)
 			System.out.println(Clients.get(i));
-		System.out.println("--------------");
+		System.out.println("\n==================================================");
 	}
+
 	public void printListOfAdmins() {
-		System.out.println("\n***List Of Admins in this Company are***\n--------------\n");
+		System.out.println("\n***List Of Admins in this Company are***\n==================================================\n");
 		for (int i = 0; i < Admins.size(); i++)
 			System.out.println(Admins.get(i));
-		System.out.println("--------------");
+		System.out.println("\n==================================================");
 	}
+
 	public Employee getAdministrator(String username) {
 		for (Employee e : Admins)
 			if (e.getUsername().equals(username))
 				return e;
 		return null;
 	}
+
 	public void PrintListOfEmployeesAttendance() {
-		System.out.println("\n***List Of Employees in this Company are***\n--------------\n");
+		System.out.println("\n***List Of Employees in this Company are***\n==================================================\n");
 		for (int i = 0; i < HE.size(); i++) {
-			if (HE.get(i) instanceof HourlyEmployee)
+			if (HE.get(i) instanceof HourlyEmployee) {
 				System.out.println(((HourlyEmployee) HE.get(i)));
-			else
-				System.out.println(((PartTimeEmployee) HE.get(i)));
-			HE.get(i).PrintAttendance();
-		System.out.println("--------------");
+				HE.get(i).PrintAttendance();
+			} else {
+				if (HE.get(i) instanceof PartTimeEmployee) {
+					System.out.println(((PartTimeEmployee) HE.get(i)));
+					HE.get(i).PrintAttendance();
+				}
+			}
+			System.out.println("\n==================================================");
 		}
 	}
-	public  boolean exists(String username) {
-		for(Client c : Clients)
-			if(c.getUsername().equals(username))
+
+	public boolean exists(String username) {
+		for (Client c : Clients)
+			if (c.getUsername().equals(username))
 				return true;
 		return false;
 	}
-	public  Client getClient(String username) {
-		for(Client c : Clients)
-			if(c.getUsername().equals(username))
+
+	public Client getClient(String username) {
+		for (Client c : Clients)
+			if (c.getUsername().equals(username))
 				return c;
 		return null;
 	}
-	
+
 }

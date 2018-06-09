@@ -118,6 +118,6 @@ public class HourlyEmployee extends Employee {
 	}
 
 	public String toString() {
-		return super.toString() + "he is an HourlyEmployee \nnb of req hours " + this.nbOfHours + "-----------------\n";
+		return "\tHourlyEmployee " + super.toString() + "\tnb of req hours " + this.reqNbOfHours + "\n\t\t---------------------------\n";
 	}
 }

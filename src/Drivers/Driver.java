@@ -55,6 +55,7 @@ public class Driver {
 					case 2:
 						Website.PrintListOfEmployees();
 						System.out.print("Enter the username of that Employee : ");
+						scan.nextLine();
 						String id = scan.nextLine();
 						try {
 							CmpD.setAdmin(id);
@@ -79,6 +80,7 @@ public class Driver {
 						break;
 					case 5:
 						Website.PrintListOfEmployees();
+						break;
 					case 6:
 						Website.PrintListOfEmployeesAttendance();
 						break;
@@ -273,11 +275,11 @@ public class Driver {
 		int choice;
 		boolean running = true;
 		SP.read();
-		// int a[] = { 12, 12, 1999 };
-		// Employee admin = new Employee("admin", "admin", a);
-		// admin.setPassword("admin");
-		// admin.setAdminstartor();
-		// Website.HE.add(admin);
+		int a[] = { 12, 12, 1999 };
+		Employee admin = new Employee("admin", "admin", a);
+		admin.setPassword("admin");
+		admin.setAdminstartor();
+		Website.HE.add(admin);
 
 		while (running) {
 			System.out.println("**Login as a**\n\n(1) Client\t(2) Employee\n(3) Company Admin\t(0) to Terminate");

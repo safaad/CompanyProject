@@ -50,6 +50,6 @@ public class Person implements Serializable{
 	}
 
 	public String toString() {
-		return fn + "  " + ln + "\n";
+		return "\t"+fn + "  " + ln + "\n";
 	}
 }
