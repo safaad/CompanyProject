@@ -90,7 +90,7 @@ public class HourlyEmployee extends Employee {
 		return extra;
 	}
 
-	protected void setSalary() {
+	public void setSalary() {
 		salary += getExtraPay();
 	}
 

@@ -35,15 +35,24 @@ public class Driver {
 				System.out.println("\n\nHello " + e.getUsername() + "!\n\t\t\t*** Menu ***\t\t\t\n");
 				repeat1 = true;
 				while (repeat1) {
-					System.out.println("1-\tSet another Admin\n2-\tRemove Admin/Employee");
-					System.out.println("3-\tGet Employee Of the month");
-					System.out.println("4-\tGet list Employees" + "\n5-\tGet list of attendance of all employees");
-					System.out.println("6-\tReset the salaries of the employees" + "\n7-\tGet list of products\n"
-							+ "8-\tRemove a Product\n" + "9-\t Get list of clients");
-					System.out.println("10-\tBack to menu" + "\n11-\tExit from Employee side");
-					choice = scan.nextInt();
+					System.out.println("1-\tShow List Of Admins\n2-\tSet another Admin\n3-\tRemove Admin/Employee");
+					System.out.println("4-\tGet Employee Of the month");
+					System.out.println("5-\tGet list Employees" + "\n6-\tGet list of attendance of all employees");
+					System.out.println("7-\tReset the salaries of the employees" + "\n8-\tGet list of products\n"
+							+ "9-\tRemove a Product\n" + "10-\t Get list of clients");
+					System.out.println("11-\tBack to menu" + "\n12-\tExit from Employee side");
+					try {
+						choice = scan.nextInt();
+					} catch (InputMismatchException ex) {
+						System.out.print("Incorrect choice reEnter : ");
+						scan.nextLine();
+						choice = scan.nextInt();
+					}
 					switch (choice) {
 					case 1:
+						Website.printListOfAdmins();
+						break;
+					case 2:
 						Website.PrintListOfEmployees();
 						System.out.print("Enter the username of that Employee : ");
 						String id = scan.nextLine();
@@ -53,13 +62,13 @@ public class Driver {
 							// TODO Auto-generated catch block
 						}
 						break;
-					case 2:
+					case 3:
 						Website.PrintListOfEmployees();
 						System.out.print("Enter the username of that Employee : ");
 						id = scan.nextLine();
 						CmpD.removeEmp(id);
 						break;
-					case 3:
+					case 4:
 						System.out.println("Our Employees Of the month are !!!");
 						if (CmpD.getEmployeeOfMonthH() != null) {
 							System.out.println("from the Hourly Employees : " + CmpD.getEmployeeOfMonthH());
@@ -68,31 +77,31 @@ public class Driver {
 							System.out.println("from the PartTime Employees : " + CmpD.getEmployeeOfMonthP());
 						}
 						break;
-					case 4:
-						Website.PrintListOfEmployees();
 					case 5:
+						Website.PrintListOfEmployees();
+					case 6:
 						Website.PrintListOfEmployeesAttendance();
 						break;
-					case 6:
-						// reset
-						break;
 					case 7:
-						Website.PrintListOfProducts();
+						CmpD.resetSalaries();
 						break;
 					case 8:
+						Website.PrintListOfProducts();
+						break;
+					case 9:
 						Website.PrintListOfProducts();
 						System.out.print("Enter the name of that product : ");
 						id = scan.nextLine();
 						CmpD.removeProduct(id);
 						break;
-					case 9:
+					case 10:
 						Website.PrintListOfClients();
 						break;
-					case 10:
+					case 11:
 						login = false;
 						repeat1 = false;
 						break;
-					case 11:
+					case 12:
 						repeat1 = false;
 						repeat = false;
 						break;
@@ -102,7 +111,6 @@ public class Driver {
 				}
 			}
 		}
-
 	}
 
 	public static void EmployeeLogin() {
@@ -152,7 +160,13 @@ public class Driver {
 					System.out.println(
 							"7-\tAdd Products to stock" + "\n8-\tGet username" + "\n9-\tshow list of products");
 					System.out.println("10-\tBack to menu" + "\n11-\tExit from Employee side");
-					choice = scan.nextInt();
+					try {
+						choice = scan.nextInt();
+					} catch (InputMismatchException ex) {
+						System.out.print("Incorrect choice reEnter : ");
+						scan.nextLine();
+						choice = scan.nextInt();
+					}
 					switch (choice) {
 					case 1:
 						EmpD.checkIn(e);
@@ -219,7 +233,13 @@ public class Driver {
 		boolean loggedIn = false;
 		System.out.println("(1) Login\t(2) Register");
 		scan.nextLine();
-		choice = scan.nextInt();
+		try {
+			choice = scan.nextInt();
+		} catch (InputMismatchException ex) {
+			System.out.print("Incorrect choice reEnter : ");
+			scan.nextLine();
+			choice = scan.nextInt();
+		}
 		while (!loggedIn) {
 			if (choice == 1) {
 				guest = CD.signIn();
@@ -253,16 +273,21 @@ public class Driver {
 		int choice;
 		boolean running = true;
 		SP.read();
-		//int a[] = { 12, 12, 1999 };
-		//Employee admin = new Employee("admin", "admin", a);
-		//admin.setPassword("admin");
-		//admin.setAdminstartor();
-		//Website.HE.add(admin);
+		// int a[] = { 12, 12, 1999 };
+		// Employee admin = new Employee("admin", "admin", a);
+		// admin.setPassword("admin");
+		// admin.setAdminstartor();
+		// Website.HE.add(admin);
 
 		while (running) {
 			System.out.println("**Login as a**\n\n(1) Client\t(2) Employee\n(3) Company Admin\t(0) to Terminate");
-			choice = scan.nextInt();
-
+			try {
+				choice = scan.nextInt();
+			} catch (InputMismatchException ex) {
+				System.out.print("Incorrect choice reEnter : ");
+				scan.nextLine();
+				choice = scan.nextInt();
+			}
 			switch (choice) {
 			case 0:
 				running = false;

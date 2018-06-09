@@ -83,7 +83,7 @@ public class PartTimeEmployee extends Employee {
 		}
 	}
 
-	protected void setSalary() {// for all shifts 500$ for extra shift 10 $
+	public void setSalary() {// for all shifts 500$ for extra shift 10 $
 		int c = 0;
 		for (int i = 0; i < this.attendExtra.size(); i++)
 			if (attendExtra.get(i))

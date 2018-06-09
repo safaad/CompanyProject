@@ -19,21 +19,20 @@ public class CompanyDriver {
 	public boolean repeat1 = true;
 
 	Employee AdminSignIn() {
-			System.out.print("Username: ");
-			fn = scan.nextLine();
-			Employee e = Driver.Website.getAdministrator(fn);
-			if (e != null) {
-				if (!Driver.EmpD.verifyPassword(e)) {
+		System.out.print("Username: ");
+		fn = scan.nextLine();
+		Employee e = Driver.Website.getAdministrator(fn);
+		if (e != null) {
+			if (!Driver.EmpD.verifyPassword(e)) {
 				System.out.println("Wrong username or password");
-					return null;
-					
-				}
+				return null;
+
 			}
-			else {
-				System.out.println("you are not admistrator in this company");
-			
-			}
-			return e;
+		} else {
+			System.out.println("you are not admistrator in this company");
+
+		}
+		return e;
 	}
 
 	public void removeEmp(String username) {
@@ -46,15 +45,25 @@ public class CompanyDriver {
 		System.out.println("this employee don't even exist!!");
 
 	}
-	
+
 	public void removeProduct(String itemName) {
-		if(Driver.Website.getProduct(itemName)!=null) {
+		if (Driver.Website.getProduct(itemName) != null) {
 			Driver.Website.Pr.remove(Driver.Website.getProduct(itemName));
 			Driver.SP.save();
 			System.out.println("Successfully removed !!");
 			return;
 		}
 		System.out.println("this product don't even exist !!");
+	}
+
+	public void resetSalaries() {
+		for (Employee e : Driver.Website.HE) {
+			if (e instanceof HourlyEmployee)
+				((HourlyEmployee) e).setSalary();
+			else if (e instanceof PartTimeEmployee)
+				((PartTimeEmployee) e).setSalary();
+		}
+
 	}
 
 	public void setAdmin(String username) throws AdminsException {
@@ -68,40 +77,42 @@ public class CompanyDriver {
 				Driver.Website.getEmployee(username).setAdminstartor();
 			}
 		} catch (AdminsException e) {
-			System.out.println("NO More places");
+			System.out.println("NO MORE PLACES !!");
 			// go back to the menu
 		}
 		// an admin can enter here he can add another admin hhe has the accessibilty to
 		// see employees clients and orders and products hik btzakar till now
 	}
+
 	public HourlyEmployee getEmployeeOfMonthH() {
-		int min=100000;
-		HourlyEmployee he=null;
-		
-		for(int i=0;i<Driver.Website.HE.size();i++) {
-			Employee e=Driver.Website.HE.get(i);
-			if(e instanceof HourlyEmployee) {
-				if(min < ((HourlyEmployee)e).getTotalNbOfWorkedHours()) {
-					min=((HourlyEmployee)e).getTotalNbOfWorkedHours();
-					he=((HourlyEmployee)e);
+		int min = 100000;
+		HourlyEmployee he = null;
+
+		for (int i = 0; i < Driver.Website.HE.size(); i++) {
+			Employee e = Driver.Website.HE.get(i);
+			if (e instanceof HourlyEmployee) {
+				if (min < ((HourlyEmployee) e).getTotalNbOfWorkedHours()) {
+					min = ((HourlyEmployee) e).getTotalNbOfWorkedHours();
+					he = ((HourlyEmployee) e);
 				}
 			}
 		}
-	return he;
+		return he;
 	}
+
 	public PartTimeEmployee getEmployeeOfMonthP() {
-		int min=100000;
-		 PartTimeEmployee pe=null;
-		
-		for(int i=0;i<Driver.Website.HE.size();i++) {
-			Employee e=Driver.Website.HE.get(i);
-			if(e instanceof  PartTimeEmployee) {
-				if(min < (( PartTimeEmployee)e).getNbofShifts()) {
-					min=(( PartTimeEmployee)e).getNbofShifts();
-					pe=(( PartTimeEmployee)e);
+		int min = 100000;
+		PartTimeEmployee pe = null;
+
+		for (int i = 0; i < Driver.Website.HE.size(); i++) {
+			Employee e = Driver.Website.HE.get(i);
+			if (e instanceof PartTimeEmployee) {
+				if (min < ((PartTimeEmployee) e).getNbofShifts()) {
+					min = ((PartTimeEmployee) e).getNbofShifts();
+					pe = ((PartTimeEmployee) e);
 				}
 			}
 		}
-	return pe;
+		return pe;
 	}
 }

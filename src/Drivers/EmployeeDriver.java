@@ -169,7 +169,6 @@ public class EmployeeDriver {
 			System.out.println(PTE1.getExtraPay() + " $");
 		}
 	}
-
 	public void addToStock(String itemName, int qt) {
 		Product p;
 		if (Driver.Website.existProduct(itemName)) {
