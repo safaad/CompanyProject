@@ -1,5 +1,6 @@
 package Individuals;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.sql.Time;
 
@@ -16,7 +17,7 @@ public class PartTimeEmployee extends Employee {
 	private Time pmIn = new Time(17, 0, 0);
 	@SuppressWarnings("deprecation")
 	private Time pmOut = new Time(0, 0, 0);
-	private boolean flagin;
+	private boolean flagin=false;
 	protected int Shift;// 1 for am 2 for pm
 	private String shift;
 
@@ -32,21 +33,30 @@ public class PartTimeEmployee extends Employee {
 	@SuppressWarnings("deprecation")
 	public void registerIn() {
 		Date d = new Date();
+		if(flagin) {
+			System.out.println("Can't register in");
+			return;
+		}
 		Time in = new Time(d.getHours(), d.getMinutes(), d.getSeconds());
 		if (Shift == 1) {
 			if (in.equals(amIn) || (in.after(amIn) && in.before(new Time(9, 0, 0))))
 				flagin = true;
+		
 		} else {
 			if (in.equals(pmIn) || (in.after(pmIn) && in.before(new Time(18, 0, 0))))
 				flagin = true;
+			
 		}
-		flagin = false;
 	}
 
 	@SuppressWarnings("deprecation")
 	public void registerOut() {
 		Date d = new Date();
 		Time out = new Time(d.getHours(), d.getMinutes(), d.getSeconds());
+		if(!flagin) {
+			System.out.println("Can't register out");
+			return;
+		}
 		if (flagin) {
 			if (Shift == 1) {
 				if (out.equals(amOut) || (out.after(new Time(14, 40, 0)) && out.before(amOut))) {
@@ -80,7 +90,9 @@ public class PartTimeEmployee extends Employee {
 		} else {
 			this.attend.add(false);
 			this.attendExtra.add(false);
+			return;
 		}
+		this.attendTime.add(Calendar.getInstance());
 	}
 
 	public void setSalary() {// for all shifts 500$ for extra shift 10 $

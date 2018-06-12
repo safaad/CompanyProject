@@ -7,23 +7,28 @@ import Individuals.Client;
 import Products.Product;
 
 public class ClientDriver {
+	
 	Scanner scan = new Scanner(System.in);
-
+	
+	
 	void printMenu() {
-		System.out.println("** Hello **");
-		System.out.println("1)\tView Wish list");
-		System.out.println("2)\tTrack your delivery");
-		System.out.println("3)\tView current Cart");
+		System.out.println("** Menu **");
+		System.out.println("1)\tView our products");
+		System.out.println("2)\tAdd a product to your cart");
+		System.out.println("3)\tRemove a product from your cart");
+		System.out.println("4)\tClear cart");
+		System.out.println("5)\tAdd to wish list");
+		System.out.println("6)\tView Wish list");
+		System.out.println("7)\tRemove product from your wish list");
+		System.out.println("8)\tView current Cart");
+		System.out.println("9)\tRequest delivery");
+		System.out.println("10)\tTrack your delivery");
 		System.out.println("0)\tLog out");
 	}
 
 	void viewWishList(Client c) {
 		for (Product p : c.WishList)
 			System.out.println(p);
-	}
-
-	void viewCart() {
-
 	}
 
 	void trackDelivery() {
@@ -84,4 +89,9 @@ public class ClientDriver {
 		guest = new Client(fn, ln, a, username, password);
 		return guest;
 	}
+	
+	public void viewCart(Client c) {
+		c.viewCart();
+	}
+	
 }

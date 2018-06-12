@@ -1,6 +1,9 @@
 package Products;
 
-public class Product {
+import java.io.Serializable;
+
+public class Product implements Serializable {
+	private static final long serialVersionUID = 1L;
 	protected String itemName;
 	protected float Rate;
 	protected float Price;
@@ -55,6 +58,6 @@ public class Product {
 	}
 
 	public String toString() {
-		return itemName + "\t$" + Price;
+		return itemName + "\t$" + Price + "\tQuantity: " + Qty;
 	}
 }

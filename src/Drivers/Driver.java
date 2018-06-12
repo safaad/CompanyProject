@@ -6,6 +6,8 @@ import java.util.Scanner;
 
 import CompanyStuff.*;
 import Individuals.*;
+import Products.Order;
+import Products.OrderManager;
 
 public class Driver {
 	public static Scanner scan = new Scanner(System.in);
@@ -13,7 +15,7 @@ public class Driver {
 	public static files SP = new files();
 	public static EmployeeDriver EmpD = new EmployeeDriver();
 	public static CompanyDriver CmpD = new CompanyDriver();
-
+	public static OrderManager OM = new OrderManager();
 	public static void AdminLogin() {
 		int choice = 0;
 		boolean login = false, repeat = true;
@@ -55,7 +57,6 @@ public class Driver {
 					case 2:
 						Website.PrintListOfEmployees();
 						System.out.print("Enter the username of that Employee : ");
-						scan.nextLine();
 						String id = scan.nextLine();
 						try {
 							CmpD.setAdmin(id);
@@ -229,9 +230,10 @@ public class Driver {
 	}
 
 	public static void ClientLogin() {
-		int choice;
+		int choice, prQty;
 		Client guest = null;
 		ClientDriver CD = new ClientDriver();
+		String prName;
 		boolean loggedIn = false;
 		System.out.println("(1) Login\t(2) Register");
 		scan.nextLine();
@@ -263,9 +265,53 @@ public class Driver {
 				loggedIn = false;
 				break;
 			case 1:
-				CD.viewWishList(guest);
+				Website.PrintListOfProducts();
+				//CD.viewWishList(guest);
 				break;
-
+			case 2:
+				System.out.print("Enter product name: ");
+				scan.nextLine();
+				prName = scan.nextLine();
+				System.out.print("How much of " + prName + " do you want to purchase?\nWe currently have " + Driver.Website.getProduct(prName).getQty()+"\nQuantity: ");
+				prQty = scan.nextInt();
+				guest.order(prName, prQty);
+				//CD.viewCart(guest);
+				break;
+			case 3:
+				System.out.println("Enter product name: ");
+				scan.nextLine();
+				prName = scan.nextLine();
+				System.out.println("How much of " + prName + " do you want to remove?");
+				prQty = scan.nextInt();
+				guest.removeOrder(prName, prQty);
+				break;
+			case 4:
+				guest.clearCart();
+				break;
+			case 5:
+				System.out.println("Enter product name: ");
+				scan.nextLine();
+				prName = scan.nextLine();
+				guest.addToWishList(prName);
+				break;
+			case 6:
+				guest.viewWishList();
+				break;
+			case 7:
+				System.out.print("Enter item name: ");
+				scan.nextLine();
+				prName = scan.nextLine();
+				guest.removeFromWishList(prName);
+				break;
+			case 8:
+				guest.viewCart();
+				break;
+			case 9:
+				OM.EnqueueOrder(new Order(guest.getUsername(), guest.getCart()));
+				break;
+			case 10:
+				OM.trackOrder(guest.getUsername());
+				break;
 			}
 		}
 	}
@@ -275,10 +321,10 @@ public class Driver {
 		int choice;
 		boolean running = true;
 		SP.read();
-		int a[] = { 12, 12, 1999 };
-		Employee admin = new Employee("admin", "admin", a);
-		admin.setPassword("admin");
-		admin.setAdminstartor();
+		//int a[] = { 12, 12, 1999 };
+		//Employee admin = new Employee("admin", "admin", a);
+		//admin.setPassword("admin");
+		//admin.setAdminstartor();
 
 		while (running) {
 			System.out.println("**Login as a**\n\n(1) Client\t(2) Employee\n(3) Company Admin\t(0) to Terminate");

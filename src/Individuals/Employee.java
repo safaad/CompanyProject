@@ -6,6 +6,7 @@ import CompanyStuff.Company;
 import Drivers.Driver;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public  class Employee extends Person {
 	/**
@@ -17,7 +18,7 @@ public  class Employee extends Person {
 	protected String username, password;
 	protected boolean admin = false;
 	protected ArrayList<Boolean> attend, attendExtra;
-
+	protected ArrayList<Calendar> attendTime;
 	public Employee(String first, String last, int[] birthday) {
 		super(first, last, birthday);
 		try{username = "" +fn.substring(0,3) + "_" + ln.substring(0,3);
@@ -26,6 +27,7 @@ public  class Employee extends Person {
 		}
 		attend = new ArrayList<Boolean>();
 		attendExtra = new ArrayList<Boolean>();
+		attendTime=new ArrayList<Calendar>();
 	}
 
 	public void setAdminstartor() {
@@ -55,13 +57,13 @@ public  class Employee extends Person {
 	public void PrintAttendance() {
 		int i;
 		for (i = 0; i < attend.size(); i++)
-			System.out.print("Day " + i + 1 + " : " + attend.get(i) + "  ||  ");
+			System.out.print("On "+attendTime.get(i).getTime() + " : " + attend.get(i) + "  ||  ");
 	}
 
 	public void PrintAttendanceExtra() {
 		int i;
 		for (i = 0; i < attendExtra.size(); i++)
-			System.out.print("Day " + i + 1 + " : " + attendExtra.get(i) + "  ||  ");
+			System.out.print("On "+attendTime.get(i).getTime() + " : " + attendExtra.get(i) + "  ||  ");
 	}
 	public boolean getAdmin() {
 		return this.admin;

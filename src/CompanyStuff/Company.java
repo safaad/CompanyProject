@@ -1,18 +1,20 @@
 package CompanyStuff;
 
 import java.util.ArrayList;
-
 import Individuals.Client;
 import Individuals.Employee;
 import Individuals.HourlyEmployee;
 import Individuals.PartTimeEmployee;
+import Products.OrderManager;
 import Products.Product;
+import CompanyStuff.Company;
 
 public class Company {
 	public ArrayList<Employee> HE;
 	public ArrayList<Client> Clients;
 	public ArrayList<Product> Pr;
 	public ArrayList<Employee> Admins;
+	public OrderManager OrdMan = new OrderManager();
 	private double budget;
 	public static int NbofAdmins = 0;
 
@@ -140,6 +142,10 @@ public class Company {
 			if (c.getUsername().equals(username))
 				return c;
 		return null;
+	}
+	
+	public ArrayList<Product> getProducts() {
+		return Pr;
 	}
 
 }
