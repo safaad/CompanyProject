@@ -140,8 +140,6 @@ public class files {
 				e = EmpRead.readObject();
 				if (((Employee) e).getAdmin()) {
 					Driver.Website.Admins.add((Employee) e);
-				} else if (e instanceof HourlyEmployee) {
-
 				}
 				else if (e instanceof HourlyEmployee) {
 					Driver.Website.HE.add((HourlyEmployee) e);
@@ -364,6 +362,7 @@ public class files {
 	
 	public void read() {
 		if (!initializeSize()) { // get the size of lists from the size.txt
+			System.out.println("HELLOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
 			closeAllFiles();
 			return;
 		}
