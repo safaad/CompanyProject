@@ -20,8 +20,9 @@ public class ClientDriver {
 		System.out.println("6)\tView Wish list");
 		System.out.println("7)\tRemove product from your wish list");
 		System.out.println("8)\tView current Cart");
-		System.out.println("9)\tRequest delivery");
-		System.out.println("10)\tTrack your delivery");
+		System.out.println("9)\tCheckout");
+		System.out.println("10)\tPrint list of transactions");
+		System.out.println("11)\tDelete my account");
 		System.out.println("0)\tLog out");
 	}
 
@@ -42,7 +43,7 @@ public class ClientDriver {
 		System.out.print("Password: ");
 		password = scan.nextLine();
 		guest = Driver.Website.getClient(username);
-		if (guest == null || !guest.verifyPassword(password)) {
+		if (guest == null || !guest.confirmPassword(password)) {
 			System.out.println("Wrong username or password!");
 			return null;
 		}
@@ -91,6 +92,28 @@ public class ClientDriver {
 
 	public void viewCart(Client c) {
 		c.viewCart();
+	}
+	
+	public boolean verifyPassword(Client c) {
+		int i = 4;
+		String s;
+		do {
+			System.out.print("Enter password : (" + i + " remaining attempts): ");
+			s = scan.nextLine();
+			i--;
+		} while (i > 0 && !c.confirmPassword(s));
+		if (!c.confirmPassword(s))
+			return false;
+		return true;
+
+	}
+	
+	public boolean removeAcc(Client c) {
+		if(verifyPassword(c)) {
+			Driver.Website.Clients.remove(c);
+			return true;
+		}
+		return false;
 	}
 
 }

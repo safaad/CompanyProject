@@ -5,8 +5,7 @@ import java.util.Scanner;
 
 import CompanyStuff.*;
 import Individuals.*;
-import Products.Order;
-import Products.OrderManager;
+import Products.Transaction;
 
 public class Driver {
 	public static Scanner scan = new Scanner(System.in);
@@ -14,7 +13,7 @@ public class Driver {
 	public static files SP = new files();
 	public static EmployeeDriver EmpD = new EmployeeDriver();
 	public static CompanyDriver CmpD = new CompanyDriver();
-	public static OrderManager OM = new OrderManager();
+	public static ClientDriver CD = new ClientDriver();
 	private static boolean Gflag = false;
 
 	public static void AdminLogin() {
@@ -42,8 +41,8 @@ public class Driver {
 					System.out.println("4-\tGet Employee Of the month");
 					System.out.println("5-\tGet list Employees" + "\n6-\tGet list of attendance of all employees");
 					System.out.println("7-\tReset the salaries of the employees" + "\n8-\tGet list of products\n"
-							+ "9-\tRemove a Product\n" + "10-\tGet list of clients");
-					System.out.println("11-\tBack to menu" + "\n12-\tExit from Admin side");
+							+ "9-\tRemove a Product\n" + "10-\tGet list of clients\n11-\tPrint all Transactions\n12-\tShow total money in this company");
+					System.out.println("13-\tBack to menu" + "\n14-\tExit from Admin side");
 					try {
 						choice = scan.nextInt();
 					} catch (InputMismatchException ex) {
@@ -63,14 +62,29 @@ public class Driver {
 						try {
 							CmpD.setAdmin(id);
 						} catch (AdminsException e1) {
-							// TODO Auto-generated catch block
+							break;
 						}
 						break;
 					case 3:
-						Website.PrintListOfEmployees();
-						System.out.print("Enter the username of that Employee : ");
-						id = scan.nextLine();
-						CmpD.removeEmp(id);
+						System.out.println("What do you want to remove? (Admin/Emp)");
+						scan.nextLine();
+						String remove = scan.nextLine();
+						if (remove.equalsIgnoreCase("emp")) {
+							if (Website.HE.size() != 0) {
+								Website.PrintListOfEmployees();
+								System.out.print("Enter the username of that Employee : ");
+								id = scan.nextLine();
+								CmpD.removeEmp(id);
+							}
+						} else if (remove.equalsIgnoreCase("admin")) {
+							if (Website.Admins.size() != 0) {
+								Website.printListOfAdmins();
+								System.out.print("Enter the username of that Admin : ");
+								id = scan.nextLine();
+								CmpD.removeAdmin(id);
+							}
+						} else
+							System.out.println("Invalid choice!");
 						break;
 					case 4:
 						System.out.println("Our Employees Of the month are !!!");
@@ -96,6 +110,7 @@ public class Driver {
 					case 9:
 						Website.PrintListOfProducts();
 						System.out.print("Enter the name of that product : ");
+						scan.nextLine();
 						id = scan.nextLine();
 						CmpD.removeProduct(id);
 						break;
@@ -103,8 +118,15 @@ public class Driver {
 						Website.PrintListOfClients();
 						break;
 					case 11:
-						return;
+						Website.printListOfTransactions();
+						break;
 					case 12:
+						System.out.println("--Total money: " + Website.getMoney() + "$--\n");
+						break;
+					case 13:
+						repeat1 = false;
+						break;
+					case 14:
 						repeat1 = false;
 						repeat = false;
 						break;
@@ -188,11 +210,13 @@ public class Driver {
 						scan.nextLine();
 						String s = scan.nextLine();
 						e.setPassword(s);
+						break;
 					case 4:
 						EmpD.showExtraPay(e);
 						break;
 					case 5:
 						e.PrintAttendance();
+						break;
 					case 6:
 						e.PrintAttendanceExtra();
 						break;
@@ -232,11 +256,10 @@ public class Driver {
 	public static void ClientLogin() {
 		int choice = 2, prQty;
 		Client guest = null;
-		ClientDriver CD = new ClientDriver();
 		String prName;
 		boolean loggedIn = false;
 		if (!Gflag) {
-			System.out.println("(1) Login\t(2) Register\t(0) Quit to main menu");
+			System.out.println("(1) Login\t(2) Register\t(0) Exit");
 			scan.nextLine();
 			try {
 				choice = scan.nextInt();
@@ -250,30 +273,59 @@ public class Driver {
 			if (choice == 1) {
 				guest = CD.signIn();
 				loggedIn = (guest != null);
-				if(loggedIn == false)
+				if (loggedIn == false)
 					return;
 			}
-			if (choice == 2) {
+			else if (choice == 2) {
 				guest = CD.signUp();
 				Website.Clients.add(guest);
 				loggedIn = true;
 			}
-			if(choice == 0)
+			else if(choice == 0)
 				return;
-			if (choice != 1 && choice != 2)
+			else {
 				System.out.println("Your choice was none of the above!");
+				return ;
+			}
 		}
 		Gflag = false;
 		while (loggedIn) {
 			CD.printMenu();
-			choice = scan.nextInt();
+			try {
+				choice = scan.nextInt();
+			}catch(InputMismatchException e9) {
+				System.out.println("Invalid choice! Enter another input");
+				scan.nextLine();
+				try {
+					choice = scan.nextInt();
+				}catch(InputMismatchException e8) {
+					System.out.println("Invalid choice!");
+					scan.nextLine();
+					return;
+				}
+			}
 			switch (choice) {
 			case 0:
+				if(!guest.getCart().isEmpty()) {
+					System.out.println("You're leaving with products in your cart! If you continue you will lose them!");
+					System.out.println("Continue? (Yes/No)");
+					scan.nextLine();
+					String lose = scan.nextLine();
+					if(lose.equalsIgnoreCase("no")) {
+						break;
+					}
+					else if(lose.equalsIgnoreCase("yes")) {
+						guest.clearCart();
+					}
+					else {
+						System.out.println("Wrong choice!");
+						break;
+					}
+				}
 				loggedIn = false;
 				break;
 			case 1:
 				Website.PrintListOfProducts();
-				// CD.viewWishList(guest);
 				break;
 			case 2:
 				Website.PrintListOfProducts();
@@ -287,6 +339,7 @@ public class Driver {
 				// CD.viewCart(guest);
 				break;
 			case 3:
+				guest.viewCart();
 				System.out.println("Enter product name: ");
 				scan.nextLine();
 				prName = scan.nextLine();
@@ -317,10 +370,28 @@ public class Driver {
 				guest.viewCart();
 				break;
 			case 9:
-				OM.EnqueueOrder(new Order(guest.getUsername(), guest.getCart()));
+				if (guest.getCart().size() == 0) {
+					System.out.println("Cart is empty!");
+					break;
+				}
+				Transaction t = new Transaction(guest, guest.getCart());
+				Website.setMoney(t.getTotalMoney() + Website.getMoney());
+				Website.Transactions.add(t);
+				System.out.println(t);
+				guest.getCart().clear();
+				//guest.clearCart();
 				break;
 			case 10:
-				OM.trackOrder(guest.getUsername());
+				Website.printTran(guest);
+				break;
+			case 11:
+				if (CD.removeAcc(guest)) {
+					System.out.println("Successfully removed account!");
+					return;
+				}
+				break;
+			default:
+				System.out.println("Invalid choice!");
 				break;
 			}
 		}

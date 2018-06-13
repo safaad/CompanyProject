@@ -38,22 +38,31 @@ public class CompanyDriver {
 	public void removeEmp(String username) {
 		if (Driver.Website.getEmployee(username) != null) {
 			Driver.Website.HE.remove(Driver.Website.getEmployee(username));
-			Driver.SP.save();
-			System.out.println("Successfully removed !!");
+			//Driver.SP.save();
+			System.out.println("Successfully removed!");
 			return;
 		}
-		System.out.println("this employee don't even exist!!");
-
+		System.out.println("This employee doesn't exist!");
+	}
+	
+	public void removeAdmin(String username) {
+		if (Driver.Website.getAdmin(username) != null) {
+			Driver.Website.Admins.remove(Driver.Website.getAdmin(username));
+			//Driver.SP.save();
+			System.out.println("Successfully removed!");
+			return;
+		}
+		System.out.println("This admin doesn't exist!");
 	}
 
 	public void removeProduct(String itemName) {
 		if (Driver.Website.getProduct(itemName) != null) {
 			Driver.Website.Pr.remove(Driver.Website.getProduct(itemName));
 			Driver.SP.save();
-			System.out.println("Successfully removed !!");
+			System.out.println("Successfully removed!");
 			return;
 		}
-		System.out.println("this product don't even exist !!");
+		System.out.println("This product doesn't exist!");
 	}
 
 	public void resetSalaries() {
@@ -68,7 +77,7 @@ public class CompanyDriver {
 
 	public void setAdmin(String username) throws AdminsException {
 		if (Driver.Website.alreadyExistsAdmin(username)) {
-			System.out.println("he is already an admin");
+			System.out.println("He is already an admin");
 			return;
 		}
 
@@ -120,4 +129,5 @@ public class CompanyDriver {
 		}
 		return pe;
 	}
+
 }

@@ -59,12 +59,14 @@ public class Employee extends Person {
 		int i;
 		for (i = 0; i < attend.size(); i++)
 			System.out.print("On " + attendTime.get(i).getTime() + " : " + attend.get(i) + "  ||  ");
+		System.out.println("\n");
 	}
 
 	public void PrintAttendanceExtra() {
 		int i;
 		for (i = 0; i < attendExtra.size(); i++)
 			System.out.print("On " + attendTime.get(i).getTime() + " : " + attendExtra.get(i) + "  ||  ");
+		System.out.println("\n");
 	}
 
 	public boolean getAdmin() {
@@ -72,6 +74,12 @@ public class Employee extends Person {
 	}
 
 	public String toString() {
+		String s = super.toString();
+		s += "\tUserName : " + getUsername() + "\n";
+		return s;
+	}
+	
+	public String newPrint() {
 		String s = super.toString();
 		s += "\tUserName : " + getUsername() + "\n";
 		return s;
