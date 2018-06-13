@@ -4,9 +4,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class HourlyEmployee extends Employee {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	protected int reqNbOfHours;
 	protected int nbOfHours = 0;
@@ -118,6 +115,7 @@ public class HourlyEmployee extends Employee {
 	}
 
 	public String toString() {
-		return "\tHourlyEmployee " + super.toString() + "\tnb of req hours " + this.reqNbOfHours + "\n\t\t---------------------------\n";
+		return "\tHourlyEmployee " + super.toString() + "\tnb of req hours " + this.reqNbOfHours
+				+ "\n\t\t---------------------------\n";
 	}
 }

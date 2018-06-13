@@ -66,7 +66,7 @@ public class EmployeeDriver {
 		fn = scan.next();
 		System.out.print("Enter last name: ");
 		ln = scan.next();
-		if(Driver.Website.alreadyExistEmployee(fn, ln)) {
+		if (Driver.Website.alreadyExistEmployee(fn, ln)) {
 			System.out.println("you are already an employee");
 			return null;
 		}
@@ -87,14 +87,14 @@ public class EmployeeDriver {
 		a[0] = Integer.parseInt(b[0]);
 		a[1] = Integer.parseInt(b[1]);
 		a[2] = Integer.parseInt(b[2]);
-		
+
 		do {
 			try {
 				System.out.print("(1) Hourly or (2) Part time ? ");
 				type = scan.nextInt();
 			} catch (InputMismatchException ex) {
 				scan.nextLine();
-				type=-1;
+				type = -1;
 			}
 		} while (type != 1 && type != 2);
 
@@ -173,6 +173,7 @@ public class EmployeeDriver {
 			System.out.println(PTE1.getExtraPay() + " $");
 		}
 	}
+
 	public void addToStock(String itemName, int qt) {
 		Product p;
 		if (Driver.Website.existProduct(itemName)) {

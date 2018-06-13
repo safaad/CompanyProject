@@ -17,23 +17,23 @@ public class PartTimeEmployee extends Employee {
 	private Time pmIn = new Time(17, 0, 0);
 	@SuppressWarnings("deprecation")
 	private Time pmOut = new Time(0, 0, 0);
-	private boolean flagin=false;
+	private boolean flagin = false;
 	protected int Shift;// 1 for am 2 for pm
 	private String shift;
 
 	public PartTimeEmployee(String first, String last, int[] birthday, String shift) {
 		super(first, last, birthday);
 		this.shift = shift;
-		if (shift.compareToIgnoreCase("am")==0)
+		if (shift.compareToIgnoreCase("am") == 0)
 			Shift = 1;
-		else if (shift.compareToIgnoreCase("pm")==0)
+		else if (shift.compareToIgnoreCase("pm") == 0)
 			Shift = 2;
 	}
 
 	@SuppressWarnings("deprecation")
 	public void registerIn() {
 		Date d = new Date();
-		if(flagin) {
+		if (flagin) {
 			System.out.println("Can't register in");
 			return;
 		}
@@ -41,11 +41,11 @@ public class PartTimeEmployee extends Employee {
 		if (Shift == 1) {
 			if (in.equals(amIn) || (in.after(amIn) && in.before(new Time(9, 0, 0))))
 				flagin = true;
-		
+
 		} else {
 			if (in.equals(pmIn) || (in.after(pmIn) && in.before(new Time(18, 0, 0))))
 				flagin = true;
-			
+
 		}
 	}
 
@@ -53,7 +53,7 @@ public class PartTimeEmployee extends Employee {
 	public void registerOut() {
 		Date d = new Date();
 		Time out = new Time(d.getHours(), d.getMinutes(), d.getSeconds());
-		if(!flagin) {
+		if (!flagin) {
 			System.out.println("Can't register out");
 			return;
 		}
@@ -110,19 +110,22 @@ public class PartTimeEmployee extends Employee {
 				c++;
 		return c * 10;
 	}
+
 	public int getNbofShifts() {
-		int c=0;
-		for(int i=0;i<this.attend.size();i++) {
-			if(attend.get(i)) {
+		int c = 0;
+		for (int i = 0; i < this.attend.size(); i++) {
+			if (attend.get(i)) {
 				c++;
-				if(attendExtra.get(i)) {
+				if (attendExtra.get(i)) {
 					c++;
 				}
 			}
 		}
 		return c;
 	}
+
 	public String toString() {
-		return "\tPartTimeEmployee"+super.toString() + "\tshift " + this.shift + "\n\t\t---------------------------\n";
+		return "\tPartTimeEmployee" + super.toString() + "\tshift " + this.shift
+				+ "\n\t\t---------------------------\n";
 	}
 }

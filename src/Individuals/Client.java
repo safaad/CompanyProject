@@ -159,4 +159,13 @@ public class Client extends Person {
 		return Cart;
 	}
 	
+	public void refresh() {
+		for(int i = 0; i < Cart.size(); i++)
+			for(int j = i + 1; j < Cart.size(); j++)
+				if(Cart.get(i).getItemName().equals(Cart.get(j).getItemName())) {
+					Cart.get(i).setQty(Cart.get(i).getQty() + Cart.get(j).getQty());
+					Cart.remove(j);
+				}
+	}
+	
 }

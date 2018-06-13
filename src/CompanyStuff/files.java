@@ -13,6 +13,7 @@ import java.nio.file.Paths;
 
 import Drivers.Driver;
 import Individuals.*;
+import Products.OrderManager;
 import Products.Product;
 
 public class files {
@@ -28,19 +29,19 @@ public class files {
 
 	private DataOutputStream sizeOutputStream;
 	private DataInputStream sizeInputStream;
-	
+
 	private ObjectInputStream CRead;
 	private FileInputStream CFileInput;
 	private ObjectOutputStream CWrite;
 	private FileOutputStream CFileOutput;
 
-	public int sizeOfEmployees = 0;
+	private int sizeOfEmployees = 0;
 	private int sizeOfProducts = 0;
 	private int sizeOfClients = 0;
 
 	public boolean initializeSize() {
 		Path p = Paths.get("Size.txt");
-		if(Files.notExists(p))
+		if (Files.notExists(p))
 			return false;
 		try {
 			FileInputStream k = new FileInputStream("Size.txt");
@@ -52,7 +53,7 @@ public class files {
 			sizeInputStream.readChar(); // reads the \n
 			sizeOfProducts = sizeInputStream.readInt();
 			sizeInputStream.readChar(); // reads the \n
-			if(sizeOfEmployees == 0 && sizeOfClients == 0 && sizeOfProducts == 0) {
+			if (sizeOfEmployees == 0 && sizeOfClients == 0 && sizeOfProducts == 0) {
 				return false;
 			}
 		} catch (IOException e) {
@@ -78,7 +79,7 @@ public class files {
 				sizeOutputStream = new DataOutputStream(k);
 				if (E instanceof HourlyEmployee)
 					EmpWrite.writeObject((HourlyEmployee) E);
-				else if(E instanceof PartTimeEmployee)
+				else if (E instanceof PartTimeEmployee)
 					EmpWrite.writeObject((PartTimeEmployee) E);
 				else
 					EmpWrite.writeObject(E);
@@ -91,7 +92,7 @@ public class files {
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
-		for(Client c : Driver.Website.Clients)
+		for (Client c : Driver.Website.Clients)
 			try {
 				CWrite.writeObject(c);
 			} catch (IOException e1) {
@@ -111,7 +112,8 @@ public class files {
 
 	public void readPerson() {
 		Object e = null;
-		Path p = Paths.get("Employees"), p2 = Paths.get("Size.txt"), p3 = Paths.get("Products"), p4 = Paths.get("Clients");
+		Path p = Paths.get("Employees"), p2 = Paths.get("Size.txt"), p3 = Paths.get("Products"),
+				p4 = Paths.get("Clients");
 		if (Files.notExists(p) || Files.notExists(p2) || Files.notExists(p3) || Files.notExists(p4)) {
 			return;
 		}
@@ -125,24 +127,23 @@ public class files {
 		}
 		for (int i = sizeOfEmployees; i > 0; i--) {
 			try {
-                e = EmpRead.readObject();
-                if(((Employee) e).getAdmin()) {
-                    Driver.Website.Admins.add((Employee) e);
-                }
-                if (e instanceof HourlyEmployee) {
-                    Driver.Website.HE.add((HourlyEmployee) e);
-                }
-                else if (e instanceof PartTimeEmployee)
-                    Driver.Website.HE.add((PartTimeEmployee) e);
+				e = EmpRead.readObject();
+				if (((Employee) e).getAdmin()) {
+					Driver.Website.Admins.add((Employee) e);
+				}
+				if (e instanceof HourlyEmployee) {
+					Driver.Website.HE.add((HourlyEmployee) e);
+				} else if (e instanceof PartTimeEmployee)
+					Driver.Website.HE.add((PartTimeEmployee) e);
 
-            } catch (ClassNotFoundException | IOException e2) {
-                e2.printStackTrace();
-            }
+			} catch (ClassNotFoundException | IOException e2) {
+				e2.printStackTrace();
+			}
 		}
 		for (int i = sizeOfClients; i > 0; i--) {
 			try {
 				e = CRead.readObject();
-				Driver.Website.Clients.add((Client)e);
+				Driver.Website.Clients.add((Client) e);
 			} catch (ClassNotFoundException | IOException e2) {
 				e2.printStackTrace();
 			}
@@ -186,10 +187,10 @@ public class files {
 			sizeOfProducts = Driver.Website.Pr.size();
 			sizeOutputStream.writeInt(sizeOfProducts);
 			sizeOutputStream.writeChar('\n');
+			PrWrite.writeObject(Driver.Website.OrdMan);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
 	}
 
 	public void readProducts() {
@@ -211,6 +212,11 @@ public class files {
 			} catch (ClassNotFoundException | IOException e2) {
 				e2.printStackTrace();
 			}
+		}
+		try {
+			Driver.Website.OrdMan = (OrderManager) PrRead.readObject();
+		} catch (ClassNotFoundException | IOException e2) {
+			e2.printStackTrace();
 		}
 	}
 
@@ -234,21 +240,21 @@ public class files {
 		try {
 			FileOutputStream k = new FileOutputStream("Size.txt");
 			sizeOutputStream = new DataOutputStream(k);
-			//The file Size.txt will always start with 0\n0\n0\n
+			// The file Size.txt will always start with 0\n0\n0\n
 			sizeOutputStream.writeInt(0); // 0 employees
 			sizeOutputStream.writeChar('\n');
 			sizeOutputStream.writeInt(0); // 0 clients
 			sizeOutputStream.writeChar('\n');
 			sizeOutputStream.writeInt(0); // 0 products
 			sizeOutputStream.writeChar('\n');
-			} catch (IOException e) {
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
 	public void closeSizeFile() {
 		try {
-			if(sizeInputStream != null) {
+			if (sizeInputStream != null) {
 				sizeInputStream.close();
 			}
 			if (sizeOutputStream != null) {
@@ -259,8 +265,8 @@ public class files {
 			e.printStackTrace();
 		}
 	}
-	
-	public void openClientsFile(){
+
+	public void openClientsFile() {
 		try {
 			CFileOutput = new FileOutputStream("Clients");
 			CWrite = new ObjectOutputStream(CFileOutput);
@@ -268,7 +274,7 @@ public class files {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void closeClientsFile() {
 		try {
 			if (CRead != null) {
@@ -286,7 +292,7 @@ public class files {
 	}
 
 	public void read() {
-		if(!initializeSize()) { // get the size of lists from the size.txt
+		if (!initializeSize()) { // get the size of lists from the size.txt
 			return;
 		}
 		readPerson(); // read persons to the list

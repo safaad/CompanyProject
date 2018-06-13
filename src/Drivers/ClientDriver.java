@@ -7,10 +7,9 @@ import Individuals.Client;
 import Products.Product;
 
 public class ClientDriver {
-	
+
 	Scanner scan = new Scanner(System.in);
-	
-	
+
 	void printMenu() {
 		System.out.println("** Menu **");
 		System.out.println("1)\tView our products");
@@ -89,9 +88,9 @@ public class ClientDriver {
 		guest = new Client(fn, ln, a, username, password);
 		return guest;
 	}
-	
+
 	public void viewCart(Client c) {
 		c.viewCart();
 	}
-	
+
 }

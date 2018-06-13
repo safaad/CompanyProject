@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Period;
 
-public class Person implements Serializable{
+public class Person implements Serializable {
 	/**
 	 * 
 	 */
@@ -50,6 +50,6 @@ public class Person implements Serializable{
 	}
 
 	public String toString() {
-		return "\t"+fn + "  " + ln + "\n";
+		return "\t" + fn + "  " + ln + "\n";
 	}
 }

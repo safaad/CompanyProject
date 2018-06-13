@@ -1,4 +1,3 @@
-
 package Drivers;
 
 import java.util.InputMismatchException;
@@ -16,6 +15,8 @@ public class Driver {
 	public static EmployeeDriver EmpD = new EmployeeDriver();
 	public static CompanyDriver CmpD = new CompanyDriver();
 	public static OrderManager OM = new OrderManager();
+	private static boolean Gflag = false;
+
 	public static void AdminLogin() {
 		int choice = 0;
 		boolean login = false, repeat = true;
@@ -230,33 +231,38 @@ public class Driver {
 	}
 
 	public static void ClientLogin() {
-		int choice, prQty;
+		int choice = 2, prQty;
 		Client guest = null;
 		ClientDriver CD = new ClientDriver();
 		String prName;
 		boolean loggedIn = false;
-		System.out.println("(1) Login\t(2) Register");
-		scan.nextLine();
-		try {
-			choice = scan.nextInt();
-		} catch (InputMismatchException ex) {
-			System.out.print("Incorrect choice reEnter : ");
+		if (!Gflag) {
+			System.out.println("(1) Login\t(2) Register\t(0) Quit to main menu");
 			scan.nextLine();
-			choice = scan.nextInt();
+			try {
+				choice = scan.nextInt();
+			} catch (InputMismatchException ex) {
+				System.out.print("Incorrect choice reEnter : ");
+				scan.nextLine();
+				choice = scan.nextInt();
+			}
 		}
 		while (!loggedIn) {
 			if (choice == 1) {
 				guest = CD.signIn();
-				loggedIn = true;
+				loggedIn = (guest != null);
 			}
 			if (choice == 2) {
 				guest = CD.signUp();
 				Website.Clients.add(guest);
 				loggedIn = true;
 			}
+			if(choice == 0)
+				return;
 			if (choice != 1 && choice != 2)
 				System.out.println("Your choice was none of the above!");
 		}
+		Gflag = false;
 		while (loggedIn) {
 			CD.printMenu();
 			choice = scan.nextInt();
@@ -266,16 +272,18 @@ public class Driver {
 				break;
 			case 1:
 				Website.PrintListOfProducts();
-				//CD.viewWishList(guest);
+				// CD.viewWishList(guest);
 				break;
 			case 2:
+				Website.PrintListOfProducts();
 				System.out.print("Enter product name: ");
 				scan.nextLine();
 				prName = scan.nextLine();
-				System.out.print("How much of " + prName + " do you want to purchase?\nWe currently have " + Driver.Website.getProduct(prName).getQty()+"\nQuantity: ");
+				System.out.print("How much of " + prName + " do you want to purchase?\nWe currently have "
+						+ Driver.Website.getProduct(prName).getQty() + "\nQuantity: ");
 				prQty = scan.nextInt();
 				guest.order(prName, prQty);
-				//CD.viewCart(guest);
+				// CD.viewCart(guest);
 				break;
 			case 3:
 				System.out.println("Enter product name: ");
@@ -304,6 +312,7 @@ public class Driver {
 				guest.removeFromWishList(prName);
 				break;
 			case 8:
+				guest.refresh();
 				guest.viewCart();
 				break;
 			case 9:
@@ -316,18 +325,45 @@ public class Driver {
 		}
 	}
 
+	private static void guestLogin() {
+		int choice;
+		boolean guest = true;
+		Scanner scan = new Scanner(System.in);
+		while (guest) {
+			System.out.println("** Menu **\n1)\tView our products\n2)\tRegister\n0)\tQuit");
+			choice = scan.nextInt();
+			switch (choice) {
+			case 1:
+				Website.PrintListOfProducts();
+				break;
+			case 2:
+				Gflag = true;
+				ClientLogin();
+				guest = false;
+				break;
+			case 0:
+				guest = false;
+				break;
+			}
+		}
+	}
+
 	public static void main(String[] args) {
 		System.out.println("** Hello and Welcome! **");
 		int choice;
 		boolean running = true;
 		SP.read();
-		//int a[] = { 12, 12, 1999 };
-		//Employee admin = new Employee("admin", "admin", a);
-		//admin.setPassword("admin");
-		//admin.setAdminstartor();
-
+		int a[] = { 12, 12, 1999 };
+		Employee admin = new Employee("admin", "admin", a);
+		admin.setPassword("admin");
+		admin.setAdminstartor();
 		while (running) {
-			System.out.println("**Login as a**\n\n(1) Client\t(2) Employee\n(3) Company Admin\t(0) to Terminate");
+			System.out.println("\nLogin as a: \n");
+			System.out.println("(1) Guest\t(2) Client");
+			System.out.println("(3) Employee\t(4) Company Admin");
+			System.out.println("\n(0) Terminate");
+			// System.out.println("Login as a:\n\n(1) Client\t(2) Employee\n(3) Company
+			// Admin\t(4) Guest\t(0) to Terminate");
 			try {
 				choice = scan.nextInt();
 			} catch (InputMismatchException ex) {
@@ -340,17 +376,19 @@ public class Driver {
 				running = false;
 				break;
 			case 1:
-				ClientLogin();
+				guestLogin();
 				break;
 			case 2:
-				EmployeeLogin();
+				ClientLogin();
 				break;
 			case 3:
+				EmployeeLogin();
+				break;
+			case 4:
 				AdminLogin();
 				break;
 			}
 		}
-
 		SP.save();
 	}
 
