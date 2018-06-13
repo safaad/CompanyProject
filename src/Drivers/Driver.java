@@ -43,7 +43,7 @@ public class Driver {
 					System.out.println("5-\tGet list Employees" + "\n6-\tGet list of attendance of all employees");
 					System.out.println("7-\tReset the salaries of the employees" + "\n8-\tGet list of products\n"
 							+ "9-\tRemove a Product\n" + "10-\tGet list of clients");
-					System.out.println("11-\tBack to menu" + "\n12-\tExit from Employee side");
+					System.out.println("11-\tBack to menu" + "\n12-\tExit from Admin side");
 					try {
 						choice = scan.nextInt();
 					} catch (InputMismatchException ex) {
@@ -58,6 +58,7 @@ public class Driver {
 					case 2:
 						Website.PrintListOfEmployees();
 						System.out.print("Enter the username of that Employee : ");
+						scan.nextLine();
 						String id = scan.nextLine();
 						try {
 							CmpD.setAdmin(id);
@@ -102,9 +103,7 @@ public class Driver {
 						Website.PrintListOfClients();
 						break;
 					case 11:
-						login = false;
-						repeat1 = false;
-						break;
+						return;
 					case 12:
 						repeat1 = false;
 						repeat = false;
@@ -251,6 +250,8 @@ public class Driver {
 			if (choice == 1) {
 				guest = CD.signIn();
 				loggedIn = (guest != null);
+				if(loggedIn == false)
+					return;
 			}
 			if (choice == 2) {
 				guest = CD.signUp();
@@ -325,10 +326,9 @@ public class Driver {
 		}
 	}
 
-	private static void guestLogin() {
+	private static void GuestLogin() {
 		int choice;
 		boolean guest = true;
-		Scanner scan = new Scanner(System.in);
 		while (guest) {
 			System.out.println("** Menu **\n1)\tView our products\n2)\tRegister\n0)\tQuit");
 			choice = scan.nextInt();
@@ -353,12 +353,12 @@ public class Driver {
 		int choice;
 		boolean running = true;
 		SP.read();
-		int a[] = { 12, 12, 1999 };
-		Employee admin = new Employee("admin", "admin", a);
-		admin.setPassword("admin");
-		admin.setAdminstartor();
+		//int a[] = { 12, 12, 1999 };
+		//Employee admin = new Employee("admin", "admin", a);
+		//admin.setPassword("admin");
+		//admin.setAdminstartor();
 		while (running) {
-			System.out.println("\nLogin as a: \n");
+			System.out.println("\nSign in as a: \n");
 			System.out.println("(1) Guest\t(2) Client");
 			System.out.println("(3) Employee\t(4) Company Admin");
 			System.out.println("\n(0) Terminate");
@@ -376,7 +376,7 @@ public class Driver {
 				running = false;
 				break;
 			case 1:
-				guestLogin();
+				GuestLogin();
 				break;
 			case 2:
 				ClientLogin();

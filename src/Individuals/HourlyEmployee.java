@@ -2,6 +2,7 @@ package Individuals;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class HourlyEmployee extends Employee {
 	private static final long serialVersionUID = 1L;
@@ -38,20 +39,23 @@ public class HourlyEmployee extends Employee {
 
 		tout = LocalDateTime.now().getHour();
 		nbOfHours = tout - tin;
-		if ((nbOfExtraHours = reqNbOfHours - nbOfHours) < 0) {
+		if ((nbOfExtraHours = nbOfHours - reqNbOfHours) < 0) {
 			this.attend.add(false);
 			this.attendExtra.add(false);
 			this.nbOfHrs.add(new Integer(nbOfHours));
+			this.attendTime.add(Calendar.getInstance());
 
 		} else {
-			if ((nbOfExtraHours = reqNbOfHours - nbOfHours) == 0) {
-				this.attend.add(false);
+			if ((nbOfExtraHours = nbOfHours - reqNbOfHours) == 0) {
+				this.attend.add(true);
 				this.attendExtra.add(false);
 				this.nbOfHrs.add(new Integer(nbOfHours));
+				this.attendTime.add(Calendar.getInstance());
 			} else {
 				this.attend.add(true);
 				this.attendExtra.add(true);
 				this.nbOfHrs.add(new Integer(nbOfHours));
+				this.attendTime.add(Calendar.getInstance());
 			}
 		}
 		flagin = false;

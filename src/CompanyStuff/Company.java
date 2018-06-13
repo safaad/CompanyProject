@@ -55,16 +55,17 @@ public class Company {
 	}
 
 	public void PrintListOfEmployees() {
-		System.out.println(
-				"\n***List Of Employees in this Company are***\n==================================================\n");
-		for (int i = 0; i < HE.size(); i++)
-			if (HE.get(i) instanceof HourlyEmployee)
-				System.out.println(((HourlyEmployee) HE.get(i)));
-			else {
-				if (HE.get(i) instanceof PartTimeEmployee)
-					System.out.println(((PartTimeEmployee) HE.get(i)));
-			}
-		System.out.println("\n==================================================");
+		System.out.println(Admins.size());
+		//System.out.println(
+			//	"\n***List Of Employees in this Company are***\n==================================================\n");
+//		for (int i = 0; i < HE.size(); i++)
+	//		if (HE.get(i) instanceof HourlyEmployee)
+		//		System.out.println(((HourlyEmployee) HE.get(i)));
+			//else {
+				//if (HE.get(i) instanceof PartTimeEmployee)
+					//System.out.println(((PartTimeEmployee) HE.get(i)));
+			//}
+		//System.out.println("\n==================================================");
 	}
 
 	public void PrintListOfProducts() {
