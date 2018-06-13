@@ -11,9 +11,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import Products.Transaction;
 import Drivers.Driver;
 import Individuals.*;
-import Products.OrderManager;
 import Products.Product;
 
 public class files {
@@ -34,10 +34,16 @@ public class files {
 	private FileInputStream CFileInput;
 	private ObjectOutputStream CWrite;
 	private FileOutputStream CFileOutput;
+	
+	private ObjectInputStream TRead;
+	private FileInputStream TFileInput;
+	private ObjectOutputStream TWrite;
+	private FileOutputStream TFileOutput;
 
 	private int sizeOfEmployees = 0;
 	private int sizeOfProducts = 0;
 	private int sizeOfClients = 0;
+	private int sizeOfTransactions = 0;
 
 	public boolean initializeSize() {
 		Path p = Paths.get("Size.txt");
@@ -47,11 +53,15 @@ public class files {
 			FileInputStream k = new FileInputStream("Size.txt");
 			sizeInputStream = new DataInputStream(k);
 
-			sizeOfEmployees = sizeInputStream.readInt();
+			sizeOfEmployees = sizeInputStream.readInt(); // employees
 			sizeInputStream.readChar(); // reads the \n
-			sizeOfClients = sizeInputStream.readInt();
+			sizeOfClients = sizeInputStream.readInt(); // clients
 			sizeInputStream.readChar(); // reads the \n
-			sizeOfProducts = sizeInputStream.readInt();
+			sizeOfProducts = sizeInputStream.readInt(); // products
+			sizeInputStream.readChar(); // reads the \n
+			sizeOfTransactions = sizeInputStream.readInt(); // Transactions
+			sizeInputStream.readChar();
+			Transaction.setSerial(sizeInputStream.readInt()); // Setting Transaction IDs to the on in the file
 			sizeInputStream.readChar(); // reads the \n
 			if (sizeOfEmployees == 0 && sizeOfClients == 0 && sizeOfProducts == 0) {
 				return false;
@@ -131,11 +141,11 @@ public class files {
 				if (((Employee) e).getAdmin()) {
 					Driver.Website.Admins.add((Employee) e);
 				}
-				if (e instanceof HourlyEmployee) {
+				else if (e instanceof HourlyEmployee) {
 					Driver.Website.HE.add((HourlyEmployee) e);
 				} else if (e instanceof PartTimeEmployee)
 					Driver.Website.HE.add((PartTimeEmployee) e);
-
+				
 			} catch (ClassNotFoundException | IOException e2) {
 				e2.printStackTrace();
 			}
@@ -187,10 +197,47 @@ public class files {
 			sizeOfProducts = Driver.Website.Pr.size();
 			sizeOutputStream.writeInt(sizeOfProducts);
 			sizeOutputStream.writeChar('\n');
-			PrWrite.writeObject(Driver.Website.OrdMan);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void saveTrxs() {
+		for (Transaction t : Driver.Website.Transactions)
+			try {
+				TWrite.writeObject(t);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		sizeOfTransactions = Driver.Website.Transactions.size();
+		try {
+			sizeOutputStream.writeInt(sizeOfTransactions);
+			sizeOutputStream.writeChar('\n');
+			sizeOutputStream.writeInt(Transaction.getSerial());
+			sizeOutputStream.writeChar('\n');
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void readTrxs() {
+		Object t = null;
+		Path p = Paths.get("Transactions");
+		if (Files.notExists(p))
+			return;
+		try {
+			TFileInput = new FileInputStream("Transactions");
+			TRead = new ObjectInputStream(TFileInput);
+		} catch (IOException e1) {
+			return;
+		}
+		for (int i = sizeOfTransactions; i > 0; i--)
+			try {
+				t = TRead.readObject();
+				Driver.Website.Transactions.add((Transaction) t);
+			} catch (ClassNotFoundException | IOException e) {
+				e.printStackTrace();
+			}
 	}
 
 	public void readProducts() {
@@ -212,11 +259,6 @@ public class files {
 			} catch (ClassNotFoundException | IOException e2) {
 				e2.printStackTrace();
 			}
-		}
-		try {
-			Driver.Website.OrdMan = (OrderManager) PrRead.readObject();
-		} catch (ClassNotFoundException | IOException e2) {
-			e2.printStackTrace();
 		}
 	}
 
@@ -246,6 +288,8 @@ public class files {
 			sizeOutputStream.writeInt(0); // 0 clients
 			sizeOutputStream.writeChar('\n');
 			sizeOutputStream.writeInt(0); // 0 products
+			sizeOutputStream.writeChar('\n');
+			sizeOutputStream.writeInt(0); // 0 Transactions
 			sizeOutputStream.writeChar('\n');
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -291,12 +335,40 @@ public class files {
 		}
 	}
 
+	public void openTransactionsFile() {
+		try {
+			TFileOutput = new FileOutputStream("Transactions");
+			TWrite = new ObjectOutputStream(TFileOutput);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void closeTransactionsFile() {
+		try {
+			if (TRead != null) {
+				TRead.close();
+				TFileInput.close();
+			}
+			if (TWrite != null) {
+				TFileOutput.close();
+				TWrite.flush();
+				TWrite.close();
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public void read() {
 		if (!initializeSize()) { // get the size of lists from the size.txt
+			System.out.println("HELLOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
+			closeAllFiles();
 			return;
 		}
 		readPerson(); // read persons to the list
 		readProducts(); // read products to the list
+		readTrxs();
 		closeAllFiles(); // close the files and continue on with the program
 	}
 
@@ -304,6 +376,7 @@ public class files {
 		openAllFiles();
 		savePerson();
 		saveProducts();
+		saveTrxs();
 		closeAllFiles();
 	}
 
@@ -312,6 +385,7 @@ public class files {
 		openEmployeeFileOutputMode();
 		openProductsFile();
 		openClientsFile();
+		openTransactionsFile();
 	}
 
 	public void closeAllFiles() {
@@ -319,6 +393,7 @@ public class files {
 		closeEmployeeFile();
 		closeProductsFile();
 		closeClientsFile();
+		closeTransactionsFile();
 	}
 
 }

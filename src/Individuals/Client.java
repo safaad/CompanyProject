@@ -40,7 +40,7 @@ public class Client extends Person {
 		boughtProducts = new ArrayList<Product>();
 	}
 	
-	public boolean verifyPassword(String password) {
+	public boolean confirmPassword(String password) {
 		return (Password.equals(password));
 	}
 
@@ -106,9 +106,9 @@ public class Client extends Person {
 			return false;
 		for(Product p : k)
 			if(p.getItemName().equals(item)) {
-				if(p.getQty() < Qty)
+				if(p.getQty() < Qty) // if the amount needed is not present in the Website return false
 					return false;
-				p.setQty(p.getQty() - Qty);
+				p.setQty(p.getQty() - Qty); // quantity of product p in Website will be decreased by Qty 
 				for(Product pr : Cart)
 					if(pr.getItemName() == p.getItemName()) {
 						pr.setQty(pr.getQty() + Qty);
@@ -152,7 +152,10 @@ public class Client extends Person {
 	}
 	
 	public void clearCart() {
-		Cart.clear();
+		for(int i = 0; i < Cart.size(); i++) { //NOIIIIIIIIIIIIIIIIIIIIIIIIIIIIICE
+			Product p = Cart.get(i);
+			removeOrder(p.getItemName(), p.getQty());
+		}
 	}
 	
 	public ArrayList<Product> getCart() {

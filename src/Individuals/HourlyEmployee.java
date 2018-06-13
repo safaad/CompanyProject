@@ -31,6 +31,7 @@ public class HourlyEmployee extends Employee {
 
 	}
 
+	@SuppressWarnings("deprecation")
 	public void registerOut() {
 		if (!flagin) {
 			System.out.println("Can't register out");
