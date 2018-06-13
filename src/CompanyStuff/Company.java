@@ -5,8 +5,8 @@ import Individuals.Client;
 import Individuals.Employee;
 import Individuals.HourlyEmployee;
 import Individuals.PartTimeEmployee;
+import Products.OrderManager;
 import Products.Product;
-import Products.Transaction;
 import CompanyStuff.Company;
 
 public class Company {
@@ -14,25 +14,16 @@ public class Company {
 	public ArrayList<Client> Clients;
 	public ArrayList<Product> Pr;
 	public ArrayList<Employee> Admins;
-	public ArrayList<Transaction> Transactions;
-	private double money;
+	public OrderManager OrdMan = new OrderManager();
+	private double budget;
 	public static int NbofAdmins = 0;
 
-	public Company(double money) {
+	public Company(double budget) {
 		HE = new ArrayList<Employee>();
 		Clients = new ArrayList<Client>();
 		Pr = new ArrayList<Product>();
 		Admins = new ArrayList<Employee>();
-		Transactions = new ArrayList<Transaction>();
-		this.money = money;
-	}
-	
-	public double getMoney() {
-		return money;
-	}
-	
-	public void setMoney(double money) {
-		this.money = money;
+		this.budget = budget;
 	}
 
 	public boolean exist(String user) {
@@ -62,16 +53,10 @@ public class Company {
 				return e;
 		return null;
 	}
-	
-	public Employee getAdmin(String user) {
-		for (Employee e : Admins)
-			if (e.getUsername().equals(user))
-				return e;
-		return null;
-	}
 
 	public void PrintListOfEmployees() {
-		System.out.println(
+		System.out.println(Admins.size());
+	System.out.println(
 				"\n***List Of Employees in this Company are***\n==================================================\n");
 		for (int i = 0; i < HE.size(); i++)
 			if (HE.get(i) instanceof HourlyEmployee)
@@ -103,15 +88,8 @@ public class Company {
 		System.out.println(
 				"\n***List Of Admins in this Company are***\n==================================================\n");
 		for (int i = 0; i < Admins.size(); i++)
-			System.out.println(((Employee) Admins.get(i)).newPrint());
+			System.out.println(Admins.get(i));
 		System.out.println("\n==================================================");
-	}
-	
-	public void printListOfTransactions() {
-		for(Client c : Clients) {
-			printTran(c);
-			System.out.println("\n==================================================");
-		}
 	}
 
 	public Employee getAdministrator(String username) {
@@ -166,14 +144,9 @@ public class Company {
 				return c;
 		return null;
 	}
-
+	
 	public ArrayList<Product> getProducts() {
 		return Pr;
-	}
-	
-	public void printTran(Client c) {
-		for(Transaction t : Transactions)
-			System.out.println(t);
 	}
 
 }

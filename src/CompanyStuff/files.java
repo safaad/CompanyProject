@@ -366,7 +366,6 @@ public class files {
 	
 	public void read() {
 		if (!initializeSize()) { // get the size of lists from the size.txt
-			System.out.println("HELLOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
 			closeAllFiles();
 			return;
 		}
