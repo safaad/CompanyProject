@@ -80,6 +80,7 @@ public class CompanyDriver {
 
 			} else {
 				Driver.Website.getEmployee(username).setAdminstartor();
+				Driver.Website.HE.remove(Driver.Website.getEmployee(username));
 			}
 		} catch (AdminsException e) {
 			System.out.println("NO MORE PLACES !!");

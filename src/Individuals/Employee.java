@@ -35,7 +35,7 @@ public class Employee extends Person {
 	public void setAdminstartor() {
 		admin = true;
 		Company.NbofAdmins++;
-		Driver.Website.Admins.add(this);
+		Driver.Website.Admins.add((Employee)this);
 		salary += 100;
 	}
 

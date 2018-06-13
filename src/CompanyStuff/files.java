@@ -130,8 +130,7 @@ public class files {
 				e = EmpRead.readObject();
 				if (((Employee) e).getAdmin()) {
 					Driver.Website.Admins.add((Employee) e);
-				}
-				if (e instanceof HourlyEmployee) {
+				} else if (e instanceof HourlyEmployee) {
 					Driver.Website.HE.add((HourlyEmployee) e);
 				} else if (e instanceof PartTimeEmployee)
 					Driver.Website.HE.add((PartTimeEmployee) e);
