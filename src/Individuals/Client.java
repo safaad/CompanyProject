@@ -7,7 +7,6 @@ public class Client extends Person {
 	
 	private static final long serialVersionUID = 1L;
 	protected String Username, Password;
-	protected Employee FavoriteEmployee;
 	protected ArrayList<Product> boughtProducts;
 	public ArrayList<Product> WishList;
 	protected ArrayList<Product> Cart;
@@ -31,18 +30,6 @@ public class Client extends Person {
 
 	public void setUsername(String username) {
 		Username = username;
-	}
-
-
-	protected Employee getFavEmp() {
-		return FavoriteEmployee;
-	}
-	protected void setFavEmp(Employee fav) {
-		FavoriteEmployee = fav;
-	}
-	
-	protected void setFavEmp(String favEmpName) {
-		FavoriteEmployee = Driver.Website.getEmployee(favEmpName);
 	}
 	
 	public boolean inWishList(String item) {
