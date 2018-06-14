@@ -58,14 +58,14 @@ public class Employee extends Person {
 	public void PrintAttendance() {
 		int i;
 		for (i = 0; i < attend.size(); i++)
-			System.out.print("On " + attendTime.get(i).getTime() + " : " + attend.get(i) + "  ||  ");
+			System.out.println("|| On " + attendTime.get(i).getTime() + " : " + attend.get(i) + "  ||  ");
 		System.out.println("\n");
 	}
 
 	public void PrintAttendanceExtra() {
 		int i;
 		for (i = 0; i < attendExtra.size(); i++)
-			System.out.print("On " + attendTime.get(i).getTime() + " : " + attendExtra.get(i) + "  ||  ");
+			System.out.println("||On " + attendTime.get(i).getTime() + " : " + attendExtra.get(i) + "  ||  ");
 		System.out.println("\n");
 	}
 

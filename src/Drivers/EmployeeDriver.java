@@ -147,7 +147,6 @@ public class EmployeeDriver {
 			PTE1 = (PartTimeEmployee) emp;
 			PTE1.registerIn();
 		}
-		System.out.println("You successfully signed in!\n");
 	}
 
 	public void checkOut(Employee emp) {
@@ -159,7 +158,7 @@ public class EmployeeDriver {
 			PTE1 = (PartTimeEmployee) emp;
 			PTE1.registerOut();
 		}
-		System.out.println("You successfully signed out! \n");
+		
 	}
 
 	public void showExtraPay(Employee emp) {
